@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AAventura.DAL
+namespace AAventura.Models
 {
     public class Hipotese
     {

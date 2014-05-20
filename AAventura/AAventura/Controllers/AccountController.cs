@@ -10,7 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using AAventura.Filters;
 using AAventura.DAL;
-
+using AAventura.Models;
 namespace AAventura.Controllers
 {
     [Authorize]

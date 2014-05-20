@@ -5,6 +5,7 @@ namespace AAventura.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using AAventura.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<AAventura.DAL.AAventuraDB>
     {

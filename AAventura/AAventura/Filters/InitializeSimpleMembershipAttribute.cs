@@ -38,7 +38,7 @@ namespace AAventura.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("UtilizadorConnection", "Utilizador", "UserId", "UserName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("AAventuraDB", "Utilizador", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

@@ -1,48 +1,156 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width" />
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
-        </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
-                </div>
-            </div>
-        </footer>
+<html lang="pt-br">
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAVentura</title>
+    <!-- CSS -->
+    <link href="Content/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="Content/css/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="Content/css/animate.min.css" rel="stylesheet" media="screen">
+    <link href="Content/css/lightbox.css" rel="stylesheet" media="screen">
+    <link href="Content/css/syntax/shCore.css" rel="stylesheet" media="screen">
+    <link href="Content/css/syntax/shThemeDefault.css" rel="stylesheet" media="screen">
+    <link href="Content/css/style.css" rel="stylesheet" media="screen" title="default">
+    <link href="Content/css/color-default.css" rel="stylesheet" media="screen" title="default">
+</head>
+
+<body>
+    <div class="boxed animated fadeIn animation-delay-5">
+
+        <header id="header" class="hidden-xs">
+            <div class="container">
+                <div id="header-title">
+                    <h1 class="animated fadeInDown"><a href="index.html">A<span>Aventura</span></a></h1>
+                    <p class="animated fadeInLeft">Volta ao Mundo em 80 Questões</p>
+                </div>
+
+                <div id="social-header" class="hidden-xs">
+                    <a href="#" class="social-icon soc-twitter animated fadeInDown animation-delay-1"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="social-icon soc-google-plus animated fadeInDown animation-delay-2"><i class="fa fa-google-plus"></i></a>
+                    <a href="#" class="social-icon soc-facebook animated fadeInDown animation-delay-3"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="social-icon soc-linkedin animated fadeInDown animation-delay-6"><i class="fa fa-linkedin"></i></a>
+                    <a href="#" class="social-icon soc-github animated fadeInDown animation-delay-7"><i class="fa fa-github"></i></a>
+                </div>
+            </div> <!-- container -->
+        </header> <!-- header -->
+        </div>
+
+        <nav class="navbar navbar-static-top navbar-mind" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="index.html">A <span>Aventura</span></a>
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-mind-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-bars fa-inverse"></i>
+                    </button>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-mind-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Jogar <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="active"><a href="lol.html">Arcade</a></li>
+                                <li><a href="index.html">Aventura</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="/Account/Register">Registar</b></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="aventura.html">Ranking</b></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="about.html">Sobre o Jogo</b></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="team.html">A Equipa</b></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="contact.html">Contacto</b></a>
+                        </li>
+                    </ul> <!-- nav nabvar-nav -->
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
+                            <div class="dropdown-menu dropdown-login animated fadeInUp">
+                                <form role="form">
+                                    <h4 class="section-title">Login</h4>
+
+                                    <div class="form-group">
+                                        <div class="input-group login-input">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            <input type="text" class="form-control" placeholder="Username">
+                                        </div>
+                                        <br>
+                                        <div class="input-group login-input">
+                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                            <input type="password" class="form-control" placeholder="Password">
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox"> Remember me
+                                            </label>
+                                            <button type="submit" class="btn btn-primary pull-right">Login</button>
+                                        </div>
+                                        <br>
+                                        <a href="/Account/Register.html" class="btn btn-primary pull-right" role="button">Registar</a>
+
+
+                                        <div class="clearfix"></div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </li> <!-- dropdown -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil</a>
+                            <div class="dropdown-menu dropdown-profile animated fadeInUp">
+                                <img src="img/avatar.jpg" class="imageborder alignleft" alt="image">
+                                <h4>Username</h4>
+                                admin@aaventura.com<br>
+                                <a href="profile.html">Perfil</a> | <a href="#">Logout</a>
+
+                            </div>
+                        </li> <!-- dropdown -->
+                    </ul> <!-- nav nabvar-nav -->
+                </div><!-- navbar-collapse -->
+            </div> <!-- container -->
+        </nav> <!-- navbar navbar-default -->
+
+        <section>
+            @RenderBody()
+        </section>
+
+        <footer id="footer">
+            <p>Laboratórios de Informática IV - Grupo 12</p>
+        </footer>
+        <div>
+        </div> <!-- boxed -->
+
+        <div id="back-top">
+            <a href="#header"><i class="fa fa-chevron-up"></i></a>
+        </div>
+        <!-- Scripts -->
+        <script src="js/jquery-1.10.2.min.js"></script>
+        <script src="js/jquery.cookie.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.mixitup.min.js"></script>
+        <script src="js/lightbox-2.6.min.js"></script>
+        <script src="js/holder.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/styleswitcher.js"></script>
+        <script src="js/syntax/shCore.js"></script>
+        <script src="js/syntax/shBrushXml.js"></script>
+        <script src="js/syntax/shBrushJScript.js"></script>
+        <script type="text/javascript">
+            SyntaxHighlighter.all()
+        </script>
+</body>
 </html>
