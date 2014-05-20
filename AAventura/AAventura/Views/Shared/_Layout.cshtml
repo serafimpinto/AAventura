@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AAVentura</title>
+
+    <title>Index</title>
     <!-- CSS -->
-    <link href="Content/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="Content/css/font-awesome.min.css" rel="stylesheet" media="screen">
-    <link href="Content/css/animate.min.css" rel="stylesheet" media="screen">
-    <link href="Content/css/lightbox.css" rel="stylesheet" media="screen">
-    <link href="Content/css/syntax/shCore.css" rel="stylesheet" media="screen">
-    <link href="Content/css/syntax/shThemeDefault.css" rel="stylesheet" media="screen">
-    <link href="Content/css/style.css" rel="stylesheet" media="screen" title="default">
-    <link href="Content/css/color-default.css" rel="stylesheet" media="screen" title="default">
+    <link href="~/Content/css//bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/css//font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/css//animate.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/css//lightbox.css" rel="stylesheet" media="screen">
+    <link href="~/Content/css//syntax/shCore.css" rel="stylesheet" media="screen">
+    <link href="~/Content/css//syntax/shThemeDefault.css" rel="stylesheet" media="screen">
+
+    <link href="~/Content/css//style.css" rel="stylesheet" media="screen" title="default">
+    <link href="~/Content/css//color-default.css" rel="stylesheet" media="screen" title="default">
 </head>
 
 <body>
@@ -55,7 +57,7 @@
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Jogar <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li class="active"><a href="lol.html">Arcade</a></li>
+                                <li class="active"><a href="index.html">Arcade</a></li>
                                 <li><a href="index.html">Aventura</a></li>
                             </ul>
                         </li>
@@ -100,8 +102,7 @@
                                             <button type="submit" class="btn btn-primary pull-right">Login</button>
                                         </div>
                                         <br>
-                                        <a href="/Account/Register.html" class="btn btn-primary pull-right" role="button">Registar</a>
-
+                                        <a href="/Account/Register" class="btn btn-primary pull-right" role="button">Registar</a>
 
                                         <div class="clearfix"></div>
 
@@ -112,9 +113,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil</a>
                             <div class="dropdown-menu dropdown-profile animated fadeInUp">
-                                <img src="img/avatar.jpg" class="imageborder alignleft" alt="image">
+                                <img src="~/Images/avatar.jpg" class="imageborder alignleft" alt="image">
                                 <h4>Username</h4>
-                                admin@aaventura.com<br>
+                                admin@openmind.com<br>
                                 <a href="profile.html">Perfil</a> | <a href="#">Logout</a>
 
                             </div>
@@ -123,13 +124,14 @@
                 </div><!-- navbar-collapse -->
             </div> <!-- container -->
         </nav> <!-- navbar navbar-default -->
-
-        <section>
+    <div id="body">
+        @RenderSection("featured", required: false)
+        <section class="content-wrapper main-content clear-fix">
             @RenderBody()
         </section>
-
+    </div>
         <footer id="footer">
-            <p>Laboratórios de Informática IV - Grupo 12</p>
+            <p>Laboratórios de Informática IV</p>
         </footer>
         <div>
         </div> <!-- boxed -->
@@ -137,18 +139,23 @@
         <div id="back-top">
             <a href="#header"><i class="fa fa-chevron-up"></i></a>
         </div>
+
+
+
         <!-- Scripts -->
-        <script src="js/jquery-1.10.2.min.js"></script>
-        <script src="js/jquery.cookie.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.mixitup.min.js"></script>
-        <script src="js/lightbox-2.6.min.js"></script>
-        <script src="js/holder.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/styleswitcher.js"></script>
-        <script src="js/syntax/shCore.js"></script>
-        <script src="js/syntax/shBrushXml.js"></script>
-        <script src="js/syntax/shBrushJScript.js"></script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.cookie.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script src="~/Scripts/jquery.mixitup.min.js"></script>
+        <script src="~/Scripts/lightbox-2.6.min.js"></script>
+        <script src="~/Scripts/holder.js"></script>
+        <script src="~/Scripts/app.js"></script>
+        <script src="~/Scripts/styleswitcher.js"></script>
+
+        <script src="~/Scripts/syntax/shCore.js"></script>
+        <script src="~/Scripts/syntax/shBrushXml.js"></script>
+        <script src="~/Scripts/syntax/shBrushJScript.js"></script>
+
         <script type="text/javascript">
             SyntaxHighlighter.all()
         </script>
