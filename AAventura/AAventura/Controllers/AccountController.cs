@@ -21,9 +21,8 @@ namespace AAventura.Controllers
         // GET: /Account/Login
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -33,11 +32,11 @@ namespace AAventura.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToAction("Perfil", "Account"); ;
             }
 
             // If we got this far, something failed, redisplay form
@@ -57,6 +56,10 @@ namespace AAventura.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult Perfil()
+        {
+            return View();
+        }
         //
         // GET: /Account/Register
 
@@ -79,9 +82,10 @@ namespace AAventura.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Nome = model.Nome, Email = model.Email, Avatar = "~/Images/default.jpg", 
+                        Estado = 1, NrRespostasCertas = 0, NrRespostasErradas = 0, VoltasDadas = 0, 
+                        TempoTotal = 0, HighScore = 0});
+                    return RedirectToAction("Login", "Account");
                 }
                 catch (MembershipCreateUserException e)
                 {

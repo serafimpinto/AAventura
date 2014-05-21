@@ -24,7 +24,7 @@
         <header id="header" class="hidden-xs">
             <div class="container">
                 <div id="header-title">
-                    <h1 class="animated fadeInDown"><a href="index.html">A<span>Aventura</span></a></h1>
+                    <h1 class="animated fadeInDown"><a href="@Url.Action("Index","Home")">A<span>Aventura</span></a></h1>
                     <p class="animated fadeInLeft">Volta ao Mundo em 80 Questões</p>
                 </div>
 
@@ -60,10 +60,7 @@
                                 <li class="active"><a href="index.html">Arcade</a></li>
                                 <li><a href="index.html">Aventura</a></li>
                             </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="/Account/Register">Registar</b></a>
-                        </li>
+                            </li>
                         <li class="dropdown">
                             <a href="aventura.html">Ranking</b></a>
                         </li>
@@ -77,8 +74,8 @@
                             <a href="contact.html">Contacto</b></a>
                         </li>
                     </ul> <!-- nav nabvar-nav -->
-
                     <ul class="nav navbar-nav navbar-right">
+                    @if (!Request.IsAuthenticated) {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login</a>
                             <div class="dropdown-menu dropdown-login animated fadeInUp">
@@ -97,12 +94,12 @@
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Remember me
+                                                <input type="checkbox"> Lembrar o meu acesso?
                                             </label>
-                                            <button type="submit" class="btn btn-primary pull-right">Login</button>
+                                            <button type="submit" class="btn btn-primary pull-right" value="Login">Login</button>
                                         </div>
                                         <br>
-                                        <a href="/Account/Register" class="btn btn-primary pull-right" role="button">Registar</a>
+                                        <a href="@Url.Action("Register","Account")" class="btn btn-primary pull-right" role="button">Registar</a>
 
                                         <div class="clearfix"></div>
 
@@ -110,16 +107,30 @@
                                 </form>
                             </div>
                         </li> <!-- dropdown -->
+                    }
+                        @if (!Request.IsAuthenticated) {
                         <li class="dropdown">
+                            <a href="@Url.Action("Register","Account")">Registar</a>
+                        </li> <!-- dropdown -->
+                        }
+                        else
+                        { 
+                              <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil</a>
                             <div class="dropdown-menu dropdown-profile animated fadeInUp">
                                 <img src="~/Images/avatar.jpg" class="imageborder alignleft" alt="image">
-                                <h4>Username</h4>
+                                <h4>@User.Identity.Name</h4>
                                 admin@openmind.com<br>
-                                <a href="profile.html">Perfil</a> | <a href="#">Logout</a>
-
+                                <a href="@Url.Action("Perfil","Account")">Perfil</a>
+                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                                }
                             </div>
                         </li> <!-- dropdown -->
+                          
+                        }
                     </ul> <!-- nav nabvar-nav -->
                 </div><!-- navbar-collapse -->
             </div> <!-- container -->
@@ -131,7 +142,7 @@
         </section>
     </div>
         <footer id="footer">
-            <p>Laboratórios de Informática IV</p>
+            <p>Laboratórios de Informática IV - Grupo 12</p>
         </footer>
         <div>
         </div> <!-- boxed -->
