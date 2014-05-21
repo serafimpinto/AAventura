@@ -75,9 +75,6 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="register.html">Registar</b></a>
-                        </li>
-                        <li class="dropdown">
                             <a href="aventura.html">Ranking</b></a>
                         </li>
                          <li class="dropdown">
@@ -110,10 +107,13 @@
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox"> Remember me
+                                                <input type="checkbox"> Lembrar-me
                                             </label>
                                         </div>
                                         <button type="submit" class="btn btn-primary pull-right">Login</button>
+                                        <div class="clearfix"></div>
+                                        <br>
+                                        <a href="register.html" class="btn btn-primary pull-right" role="button">Registar</a>                   
                                         <div class="clearfix"></div>
                                     </div>
                                 </form>      
@@ -137,12 +137,12 @@
 
         <header class="wrap-title">
             <div class="container">
-                <h1 class="page-title">Registar</h1>
+                <h1 class="page-title">Editar Perfil</h1>
 
                 <ol class="breadcrumb hidden-xs">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="profile.html">Perfil</a></li>
-                    <li class="active">Registar</li>
+                    <li class="active">Editar Perfil</li>
                 </ol>
             </div>
         </header>
@@ -150,7 +150,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h2 class="section-title">Cria conta</h2>
+                    <h2 class="section-title">Editar Perfil</h2>
                     <div class="panel panel-primary animated fadeInDown">
                         <div class="panel-heading">Registar</div>
                         <div class="panel-body">
@@ -159,32 +159,37 @@
                                     <label for="InputUserName">User Name<sup>*</sup></label>
                                     <input type="text" class="form-control" id="InputUserName">
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="InputEmail">Email<sup>*</sup></label>
-                                    <input type="email" class="form-control" id="InputEmail">
+                                    <label for="InputUserName">Nome<sup>*</sup></label>
+                                    <input type="text" class="form-control" id="InputUserName">
                                 </div>
+
+                                <div class="form-group">
+                                        <label for="InputEmail">Email<sup>*</sup></label>
+                                        <input type="email" class="form-control" id="InputEmail">
+                                </div>
+
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="InputPassword">Password<sup>*</sup></label>
-                                            <input type="password" class="form-control" id="InputPassword">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="InputConfirmPassword">Confirm Password<sup>*</sup></label>
-                                            <input type="password" class="form-control" id="InputConfirmPassword">
-                                        </div>
-                                    </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                         <label for="InputPassword">Password<sup>*</sup></label>
+                                         <input type="password" class="form-control" id="InputPassword">
+                                     </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="form-group">
+                                           <label for="InputConfirmPassword">Confirma a Password<sup>*</sup></label>
+                                           <input type="password" class="form-control" id="InputConfirmPassword">
+                                      </div>
+                                  </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" id="inlineCheckbox1" value="option1"> Li os <a href="#">Termos e Condições</a>.
-                                        </label>
+                                        <p>Edita os teus dados e confirma a tua password novamente para poderes proceder.</p>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary pull-right">Registar</button>
+                                        <button type="submit" class="btn btn-primary pull-right">Alterar</button>
                                     </div>
                                 </div>
                             </form>
@@ -198,13 +203,17 @@
                         <div class="panel-body">
                             <form role="form">
                                 <div class="form-group">
-                                   <div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="fileupload-preview thumbnail" style="width: 200px; height: 150px;"></div>
-  <div>
-    <span class="btn btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span><input type="file" /></span>
-    <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-  </div>
-</div>
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                            <img src="img/avatar.jpg">
+                                        </div>
+                                            <div>
+                                                <span class="btn btn-default btn-file"><input type="file" name="...">
+                                                </span>
+                                            </div>
+                                            <br>
+                                         <button type="submit" class="btn btn-primary pull-right">Alterar</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
