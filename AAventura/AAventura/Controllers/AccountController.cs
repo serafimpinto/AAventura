@@ -17,6 +17,8 @@ namespace AAventura.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private AAventuraDB db = new AAventuraDB();
+
         //
         // GET: /Account/Login
 
@@ -36,7 +38,7 @@ namespace AAventura.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToAction("Perfil", "Account"); ;
+                return RedirectToAction("Index", "Home");
             }
 
             // If we got this far, something failed, redisplay form
@@ -56,9 +58,11 @@ namespace AAventura.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Perfil()
+        public ActionResult Perfil(int id = 0)
         {
-            return View();
+            Utilizador u = db.Utilizadores.Find(id);
+
+            return View(u);
         }
         //
         // GET: /Account/Register
@@ -82,7 +86,7 @@ namespace AAventura.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Nome = model.Nome, Email = model.Email, Avatar = "~/Images/default.jpg", 
+                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Nome = model.Nome, Email = model.Email, Avatar = "~/images/default.jpg", 
                         Estado = 1, NrRespostasCertas = 0, NrRespostasErradas = 0, VoltasDadas = 0, 
                         TempoTotal = 0, HighScore = 0});
                     return RedirectToAction("Login", "Account");

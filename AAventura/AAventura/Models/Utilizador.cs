@@ -77,6 +77,7 @@ namespace AAventura.Models
         public string Nome { get; set; }
         
         [Required]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
         [Required]

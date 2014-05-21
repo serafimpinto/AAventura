@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model AAventura.Models.Utilizador
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -116,18 +117,17 @@
                         else
                         { 
                               <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Perfil</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">A minha conta</a>
                             <div class="dropdown-menu dropdown-profile animated fadeInUp">
                                 <img src="~/Images/avatar.jpg" class="imageborder alignleft" alt="image">
-                                <h4>@User.Identity.Name</h4>
-                                admin@openmind.com<br>
-                                <a href="@Url.Action("Perfil","Account")">Perfil</a>
-                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
-                                }
-                            </div>
+                                <h3>@User.Identity.Name</h3>
+                                <h5>@System.DateTime.Now</h5>
+                                    <a href="@Url.Action("Perfil","Account", new { id = ViewBag.UserId  })">Perfil</a>
+                                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                                    }
                         </li> <!-- dropdown -->
                           
                         }

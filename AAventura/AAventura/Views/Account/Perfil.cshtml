@@ -1,5 +1,74 @@
-﻿@{
+﻿@using AAventura.Models
+@model AAventura.Models.Utilizador
+@{
     ViewBag.Title = "Perfil";
 }
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">O meu perfil</h1>
 
-<h2>Perfil</h2>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="/Home/Index">Home</a></li>
+
+            <li class="active">Perfil</li>
+        </ol>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <section>
+                <img src="~/images/default.jpg" alt="avatar" class="img-responsive imageborder">
+            </section>
+            <section>
+
+                <a href="@Url.Action("Manage","Account")" class="btn btn-block btn-warning">Edita o teu perfil</a>
+            </section>
+        </div>
+        <div class="col-md-8">
+            <section>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><i class="fa fa-user"></i> Informações Pessoais</div>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+                        <tr>
+                            <th>Username</th>
+                            <td>@Model.UserName</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <section>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><i class="fa fa-table"></i> Dados de Jogo</div>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Perguntas Certas</th>
+                            <td>@Model.NrRespostasCertas</td>
+                        </tr>
+                        <tr>
+                            <th>Perguntas Erradas</th>
+                            <td>@Model.NrRespostasErradas</td>
+                        </tr>
+                        <tr>
+                            <th>Voltas Dadas</th>
+                            <td>@Model.VoltasDadas</td>
+                        </tr>
+                        <tr>
+                            <th>Tempo Total de Jogo</th>
+                            <td>@Model.TempoTotal h</td>
+                        </tr>
+                        <tr>
+                            <th>Highest Score</th>
+                            <td>@Model.HighScore</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div> <!-- container  -->

@@ -17,7 +17,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    @Html.ValidationSummary()
 <div class="container">
     <div class="center-block logig-form">
         <div class="panel panel-default">
@@ -28,18 +28,16 @@
                         <div class="input-group login-input">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder="Username" })
-                            @Html.ValidationMessageFor(m => m.UserName)
                         </div>
                         <br>
                         <div class="input-group login-input">
                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                             @Html.PasswordFor(m => m.Password, new { @class="form-control", @placeholder="Password"} )
-                            @Html.ValidationMessageFor(m => m.Password)
                         </div>
                         <div class="checkbox">
                             <label>
+                                <input type="checkbox"> Lembrar o meu acesso?
                                 @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
                             </label>
                         </div>
                         <button type="submit" class="btn btn-primary pull-right" value="Login">Login</button>
