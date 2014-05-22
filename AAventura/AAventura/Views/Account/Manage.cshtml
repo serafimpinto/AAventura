@@ -1,6 +1,7 @@
-﻿@model AAventura.Models.LocalPasswordModel
+﻿@model AAventura.Models.Utilizador
+@using AAventura.Models 
 @{
-    ViewBag.Title = "Manage Account";
+    ViewBag.Title = "Editar Password";
 }
 
 <hgroup class="title">
@@ -19,11 +20,4 @@ else
 { 
     @Html.Partial("_SetPasswordPartial")
 }
-
-<section id="externalLogins">
-    @Html.Action("RemoveExternalLogins")
-
-    <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
 

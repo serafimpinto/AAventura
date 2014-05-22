@@ -1,7 +1,7 @@
 ﻿@using AAventura.Models
 @model AAventura.Models.Utilizador
 @{
-    ViewBag.Title = "Perfil";
+    ViewBag.Title = "O Meu Perfil";
 }
 <header class="wrap-title">
     <div class="container">
@@ -22,7 +22,7 @@
             </section>
             <section>
 
-                <a href="@Url.Action("Manage","Account")" class="btn btn-block btn-warning">Edita o teu perfil</a>
+                <a href="@Url.Action("Edit", "Account", new { id = ViewBag.UserId})" class="btn btn-block btn-warning">Edita o teu perfil</a>
             </section>
         </div>
         <div class="col-md-8">
@@ -37,6 +37,10 @@
                         <tr>
                             <th>Username</th>
                             <td>@Model.UserName</td>
+                        </tr>
+                        <tr>
+                            <th>Nome</th>
+                            <td>@Model.Nome</td>
                         </tr>
                     </table>
                 </div>

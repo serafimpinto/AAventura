@@ -43,7 +43,7 @@ namespace AAventura.Controllers
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
+            return View();
         }
 
         //
@@ -60,7 +60,13 @@ namespace AAventura.Controllers
 
         public ActionResult Perfil(int id = 0)
         {
+            int id2 = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id2;
             Utilizador u = db.Utilizadores.Find(id);
+            if (u == null)
+            {
+                return HttpNotFound();
+            }
 
             return View(u);
         }
@@ -98,7 +104,7 @@ namespace AAventura.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View();
         }
 
         //
@@ -142,6 +148,8 @@ namespace AAventura.Controllers
                 : "";
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
             return View();
         }
 
@@ -203,9 +211,10 @@ namespace AAventura.Controllers
                     }
                 }
             }
-
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View();
         }
 
         //
@@ -334,6 +343,36 @@ namespace AAventura.Controllers
 
             ViewBag.ShowRemoveButton = externalLogins.Count > 1 || OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
+        }
+        public ActionResult Edit(int id = 0)
+        {
+
+            Utilizador utilizador = db.Utilizadores.Find(id);
+            if (utilizador == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.UserId = id;
+            return View(utilizador);
+        }
+
+        //
+        // POST: /Utilizadores/Edit/5
+
+        [HttpPost]
+        public ActionResult Edit(int id, String Nome, String Email, String Avatar)
+        {
+            Utilizador utilizador = db.Utilizadores.Find(id);
+            if (utilizador == null)
+            {
+                return HttpNotFound();
+            }
+                utilizador.Nome = Nome;
+                utilizador.Email = Email;
+                utilizador.Avatar = Avatar;
+                db.SaveChanges();
+            
+            return RedirectToAction("Perfil", "Account", new { id=utilizador.UserId});
         }
 
         #region Helpers

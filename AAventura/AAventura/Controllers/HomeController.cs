@@ -21,14 +21,17 @@ namespace AAventura.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+
+            return View();
+        }
+        public ActionResult Team()
+        {
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }

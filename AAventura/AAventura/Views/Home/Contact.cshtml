@@ -1,50 +1,61 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contactos";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-</hgroup>
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">Contactos</h1>
 
-<section class="contact">
-    <header>
-        <h3>Phone</h3>
-    </header>
-    <p>
-        <span class="label">Main:</span>
-        <span>425.555.0100</span>
-    </p>
-    <p>
-        <span class="label">After Hours:</span>
-        <span>425.555.0199</span>
-    </p>
-</section>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="/Home/Index">Home</a></li>
+            <li class="active">Contactos</li>
+        </ol>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <section>
+                <h2 class="section-title">Contacte-nos</h2>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="InputName">Nome</label>
+                        <input type="email" class="form-control" id="InputName">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputEmail1">Email</label>
+                        <input type="email" class="form-control" id="InputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="InputMessage">Mensagem</label>
+                        <textarea class="form-control" id="InputMessage" rows="8"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+                    <div class="clearfix"></div>
+                </form>
+            </section>
+        </div>
 
-<section class="contact">
-    <header>
-        <h3>Email</h3>
-    </header>
-    <p>
-        <span class="label">Support:</span>
-        <span><a href="mailto:Support@example.com">Support@example.com</a></span>
-    </p>
-    <p>
-        <span class="label">Marketing:</span>
-        <span><a href="mailto:Marketing@example.com">Marketing@example.com</a></span>
-    </p>
-    <p>
-        <span class="label">General:</span>
-        <span><a href="mailto:General@example.com">General@example.com</a></span>
-    </p>
-</section>
-
-<section class="contact">
-    <header>
-        <h3>Address</h3>
-    </header>
-    <p>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399
-    </p>
-</section>
+        <div class="col-md-4">
+            <section>
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><i class="fa fa-envelope-o"></i> Informação Adicional</div>
+                    <div class="panel-body">
+                        <h4 class="section-title">Contactos</h4>
+                        <address>
+                            <strong>Grupo 12 LI4, Inc.</strong><br>
+                            Universidade do Minho, Eng. Informática<br>
+                            Braga, Portugal<br>
+                            <abbr title="Telefone">P:</abbr> +(351) 253 911 911 <br>
+                            Mail: <a href="#">ogrupo@gmail.com</a>
+                        </address>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <section>
+        <div class="well well-sm">
+            <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.pt/maps?f=q&amp;source=s_q&amp;hl=pt-PT&amp;geocode=&amp;q=Universidade+do+Minho,+Braga&amp;aq=0&amp;oq=Univer&amp;sll=41.557922,-8.410721&amp;sspn=0.039114,0.084543&amp;ie=UTF8&amp;hq=Universidade+do+Minho,&amp;hnear=Braga&amp;ll=41.557411,-8.397774&amp;spn=0.039114,0.084543&amp;t=m&amp;z=14&amp;iwloc=A&amp;cid=5830984824706080111&amp;output=embed"></iframe><br /><small><a href="https://www.google.pt/maps?f=q&amp;source=embed&amp;hl=pt-PT&amp;geocode=&amp;q=Universidade+do+Minho,+Braga&amp;aq=0&amp;oq=Univer&amp;sll=41.557922,-8.410721&amp;sspn=0.039114,0.084543&amp;ie=UTF8&amp;hq=Universidade+do+Minho,&amp;hnear=Braga&amp;ll=41.557411,-8.397774&amp;spn=0.039114,0.084543&amp;t=m&amp;z=14&amp;iwloc=A&amp;cid=5830984824706080111" style="color:#0000FF;text-align:left">Ver mapa maior</a></small>        </div>
+    </section>
+</div> <!-- container -->

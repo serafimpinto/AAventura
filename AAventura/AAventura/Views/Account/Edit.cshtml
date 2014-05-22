@@ -1,0 +1,81 @@
+﻿@using AAventura.Models
+@model AAventura.Models.Utilizador
+@{
+    ViewBag.Title = "Edit";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">Editar Perfil</h1>
+
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="/Home/Index">Home</a></li>
+            <li><a href="/Account/Perfil/@Model.UserId">Perfil</a></li>
+            <li class="active">Editar Perfil</li>
+        </ol>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel panel-primary animated fadeInDown">
+                <div class="panel-heading">Editar</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="InputUserName">Nome</label>
+                            @Html.EditorFor(model => model.Nome, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Nome)
+                        </div>
+                        <div class="form-group">
+                            <label for="InputEmail">Email<sup>*</sup></label>
+                            @Html.EditorFor(model => model.Email, new { @class = "form-control", required= "required" })
+                            @Html.ValidationMessageFor(model => model.Email)                        
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p>Edita os teus dados e guarda.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary pull-right" value="Edit">Alterar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="section-title"><a href="@Url.Action("Manage", "Account", new { id = ViewBag.UserId })">Mudar Password</a></h2>
+        </div>
+        <div class="col-lg-4 col-lg-offset-1 col-md-5">
+            <h2 class="section-title">Upload do teu Avatar</h2>
+            <div class="panel panel-success animated fadeInDown animation-delay-2">
+                <div class="panel-heading">Avatar</div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 112px; height: 112px;">
+                                    <img src="~/images/defaultmin.jpg">
+                                </div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <input type="file">
+                                        @Html.EditorFor(model => model.Avatar)
+                                        @Html.ValidationMessageFor(model => model.Avatar)
+                                    </span>
+                                </div>
+                            </div>
+                                <br>
+                                <button type="submit" class="btn btn-primary pull-right" value="Edit">Alterar</button>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
