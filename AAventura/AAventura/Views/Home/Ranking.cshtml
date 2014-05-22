@@ -1,87 +1,46 @@
 ﻿@model IEnumerable<AAventura.Models.Utilizador>
-
 @{
     ViewBag.Title = "Ranking";
 }
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">Ranking</h1>
 
-<h2>Ranking</h2>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="#">Home</a></li>
+            <li class="active">Ranking</li>
+        </ol>
+    </div>
+</header>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Avatar)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Estado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NrRespostasCertas)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NrRespostasErradas)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VoltasDadas)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TempoTotal)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HighScore)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Avatar)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NrRespostasCertas)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NrRespostasErradas)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VoltasDadas)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TempoTotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HighScore)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Ranking Geral</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped tablesorter">
+                    <thead>
+                        <tr>
+                            <th>Utilizador <a><i class="fa fa-sort"></i></a></th>
+                            <th>Highscore <a><i class="fa fa-sort"></i></a></th>
+                            <th>Voltas Completas <a><i class="fa fa-sort"></i></a></th>
+                            <th>Perguntas Certas <a><i class="fa fa-sort"></i></a></th>
+                            <th>Perguntas Erradas <a><i class="fa fa-sort"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.HighScore)</td>
+                            <td>@Html.DisplayFor(modelItem => item.VoltasDadas)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NrRespostasCertas)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NrRespostasErradas)</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- row -->
+</div> <!-- container -->
