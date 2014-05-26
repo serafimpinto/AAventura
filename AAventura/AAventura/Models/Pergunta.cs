@@ -16,7 +16,6 @@ namespace AAventura.Models
         public string Ajuda { get; set; }
         public string Resposta { get; set; }
         public float Tempo { get; set; }
-
         public virtual Zona Zona { get; set; }
         public virtual ICollection<Hipotese> Hipoteses { get; set; }
 

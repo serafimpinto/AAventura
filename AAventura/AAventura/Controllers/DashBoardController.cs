@@ -77,32 +77,12 @@ namespace AAventura.Controllers
             return RedirectToAction("Utilizadores", "DashBoard");
         }
 
-        // GET: /DashBoard/Edit/5
-
-        public ActionResult Edit(int id = 0)
+        public ActionResult Perguntas()
         {
-            Aventura aventura = db.Aventuras.Find(id);
-            if (aventura == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aventura);
-        }
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
 
-        //
-        // POST: /DashBoard/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Aventura aventura)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(aventura).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(aventura);
+            return RedirectToAction("Perguntas","DashBoard");
         }
 
         //
