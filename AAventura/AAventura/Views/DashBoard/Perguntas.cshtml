@@ -1,0 +1,218 @@
+﻿@{
+    ViewBag.Title = "Perguntas";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1><small>DashBoard Admin </small></h1>
+            <ol class="breadcrumb">
+                <li class="active"><i class="fa fa-edit"></i> Perguntas</li>
+            </ol>
+        </div>
+    </div>
+
+
+    <h2>Adicionar Pergunta</h2>
+    <div class="col-md-8 col-centered">
+        <div class="panel panel-primary animated fadeInDown">
+
+            <div class="panel-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="InputDescricao">Descrição da Pergunta<sup>*</sup></label>
+                        <input type="text" class="form-control" id="InputDescricao">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputResposta">Resposta<sup>*</sup></label>
+                        <input type="text" class="form-control" id="InputResposta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputDificuldade">Dificuldade<sup>*</sup></label>
+                        <input type="text" class="form-control" id="InputDificuldade">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputAjuda">Ajuda<sup>*</sup></label>
+                        <input type="text" class="form-control" id="InputAjuda">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="InputTempo">Tempo<sup>*</sup></label>
+                        <input type="text" class="form-control" id="InputTempo">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="InputTipo">Tipo<sup>*</sup></label>
+                                <input type="text" class="form-control" id="InputTipo">
+                            </div>
+                        </div>
+                        <div class="col-md-6 pull-right">
+                            <div class="form-group">
+                                <label>Escolha o ficheiro</label>
+                                <input type="file">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="InputHipA">Hipótese A<sup>*</sup></label>
+                                <input type="text" class="form-control" id="InputHipA">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="InputHipB">Hipótese B<sup>*</sup></label>
+                                <input type="text" class="form-control" id="InputHipB">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="InputHipC">Hipótese C<sup>*</sup></label>
+                                <input type="text" class="form-control" id="InputHipC">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="InputHipD">Hipótese D<sup>*</sup></label>
+                                <input type="text" class="form-control" id="InputHipD">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Zona</label>
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12 pull_right">
+                            <button type="submit" class="btn btn-primary pull-right">Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <h2>Remover Pergunta</h2>
+    <div class="col-centered col-lg-8">
+        <h3>Lista de Perguntas</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped tablesorter">
+                <thead>
+                    <tr>
+                        <th>ID <a><i class="fa fa-sort"></i></a></th>
+                        <th>Descrição <a><i class="fa fa-sort"></i></a></th>
+                        <th>Resposta <a><i class="fa fa-sort"></i></a></th>
+                        <th>Dificuldade <a><i class="fa fa-sort"></i></a></th>
+                        <th>Zona <a><i class="fa fa-sort"></i></a></th>
+                        <th>Tempo <a><i class="fa fa-sort"></i></a></th>
+                        <th>Ajuda <a><i class="fa fa-sort"></i></a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Banido</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                    <tr>
+                        <td>fire</td>
+                        <td>106</td>
+                        <td>ze</td>
+                        <td>fire@gmail.com</td>
+                        <td>Activo</td>
+                        <td>fire</td>
+                        <td>106</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bs-example">
+            <ul class="pager">
+                <li><a href="#">Anterior</a></li>
+                <li><a href="#">Próximo</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-4 col-centered">
+        <div class="form-group">
+            <label>Insira o "ID" da pergunta pretendida</label>
+            <input class="form-control" placeholder="Escreva aqui...">
+        </div>
+        <button type="submit" class="btn btn-danger pull-right">Remover</button>
+    </div>
+</div><!-- /#page-wrapper -->
