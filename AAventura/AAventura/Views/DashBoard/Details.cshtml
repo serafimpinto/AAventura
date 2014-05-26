@@ -1,0 +1,29 @@
+﻿@model AAventura.Models.Aventura
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Aventura</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Moedas)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Moedas)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Exploradores)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Exploradores)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.AventuraId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

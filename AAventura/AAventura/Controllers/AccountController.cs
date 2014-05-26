@@ -81,6 +81,21 @@ namespace AAventura.Controllers
 
         //
         // POST: /Account/Register
+        public bool exiteMail(string email)
+        {
+            bool res = false;
+            int i = 0;
+            while ((i < db.Utilizadores.ToList().Count()) && !res)
+            {
+                if (email.Equals(db.Utilizadores.ToList().ElementAt(i).Email))
+                {
+                    res = true;
+                }
+                i++;
+            }
+            return res;
+        }
+
 
         [HttpPost]
         [AllowAnonymous]
@@ -89,18 +104,35 @@ namespace AAventura.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Attempt to register the user
-                try
+                if (exiteMail(model.Email))
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { Nome = model.Nome, Email = model.Email, Avatar = "~/images/default.jpg", 
-                        Estado = 1, NrRespostasCertas = 0, NrRespostasErradas = 0, VoltasDadas = 0, 
-                        TempoTotal = 0, HighScore = 0});
-                    return RedirectToAction("Login", "Account");
+                    ModelState.AddModelError("", "Email already exists. Please enter a different Email.");
                 }
-                catch (MembershipCreateUserException e)
+                else
                 {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                    // Attempt to register the user
+                    try
+                    {
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new
+                        {
+                            Nome = model.Nome,
+                            Email = model.Email,
+                            Avatar = "~/images/default.jpg",
+                            Estado = 1,
+                            NrRespostasCertas = 0,
+                            NrRespostasErradas = 0,
+                            VoltasDadas = 0,
+                            TempoTotal = 0,
+                            HighScore = 0
+                        });
+                        return RedirectToAction("Login", "Account");
+                    }
+                    catch (MembershipCreateUserException e)
+                    {
+                        ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+                    }
                 }
+
             }
 
             // If we got this far, something failed, redisplay form

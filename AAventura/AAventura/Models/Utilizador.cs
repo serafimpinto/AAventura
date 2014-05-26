@@ -16,7 +16,7 @@ namespace AAventura.Models
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Avatar { get; set; }
-        public int Estado { get; set; } // 0-Admin 1-Normal 2-Convidado
+        public int Estado { get; set; } // 0-Admin 1-Normal 2-Banido
         public int NrRespostasCertas { get; set; }
         public int NrRespostasErradas { get; set; } 
         public int VoltasDadas { get; set; }
