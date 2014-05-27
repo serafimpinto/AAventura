@@ -263,13 +263,7 @@
     <Content Include="Views\DashBoard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\DashBoard\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\DashBoard\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\DashBoard\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DashBoard\Delete.cshtml" />

@@ -38,7 +38,11 @@ namespace AAventura.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                return RedirectToAction("Index", "Home");
+                Utilizador user = db.Utilizadores.Where(u => u.UserName.Equals(model.UserName)).FirstOrDefault();
+                if (user.Estado != 0)
+                    return RedirectToAction("Index", "Home");
+                else
+                    return RedirectToAction("Index", "DashBoard");
             }
 
             // If we got this far, something failed, redisplay form

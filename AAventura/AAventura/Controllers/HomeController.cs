@@ -1,5 +1,6 @@
 ﻿using AAventura.DAL;
 using AAventura.Filters;
+using AAventura.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,11 @@ namespace AAventura.Controllers
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
 
-            return View();
+            Utilizador user = db.Utilizadores.Find(id);
+            if (user.Estado != 0)
+                return View();
+            else
+                return RedirectToAction("Index", "DashBoard");
         }
 
         public ActionResult About()
