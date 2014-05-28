@@ -52,14 +52,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="InputTipo">Tipo<sup>*</sup></label>
-                                @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 pull-right">
-                            <div class="form-group">
-                                <label>Escolha o ficheiro</label>
-                                <input type="file">
+                            <label>Escolha a imagem</label>
+                            @Html.LabelFor(m => m.imagem);
+                                <input id="imagem" name="imagem" type="file">
                             </div>
                         </div>
                     </div>
@@ -68,52 +63,42 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="InputHipA">Hipótese A<sup>*</sup></label>
-                                <input type="text" class="form-control" id="InputHipA">
+                                @Html.TextBoxFor(m => m.Ha, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="InputHipB">Hipótese B<sup>*</sup></label>
-                                <input type="text" class="form-control" id="InputHipB">
+                                @Html.TextBoxFor(m => m.Hb, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="InputHipC">Hipótese C<sup>*</sup></label>
-                                <input type="text" class="form-control" id="InputHipC">
+                                @Html.TextBoxFor(m => m.Hc, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="InputHipD">Hipótese D<sup>*</sup></label>
-                                <input type="text" class="form-control" id="InputHipD">
+                                @Html.TextBoxFor(m => m.Hd, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Zona</label>
-                        <select id="idzona"class="form-control">
+                        <select id="ZonaId" name="ZonaId" class="form-control">
                             @foreach (var item in ViewBag.Zonas)
                             {
                             <option value=@item.ZonaId>@item.Nome</option>
                             }
                         </select>
-                        <script>
-                            function onClick() {
-                                if (document.getElementById("idzona").value == "") {
-                                    alert("Escolha uma Zona");
-                                }
-                                else {
-                                    var url = "/DashBoard/AdicionarPergunta/" + document.getElementById("idzona").value;
-                                    window.location.href = url;
-                                }
-                            }
-                            </script>
+                       
                             </div>
                             <div class="row">
 
                                 <div class="col-md-12 pull_right">
-                                    <button type="submit" class="btn btn-primary pull-right" value="AdicionarPergunta" onclick="onClick()">Adicionar</button>
+                                    <button type="submit" class="btn btn-primary pull-right" value="AdicionarPergunta" >Adicionar</button>
                                 </div>
                             </div>
                         </form>

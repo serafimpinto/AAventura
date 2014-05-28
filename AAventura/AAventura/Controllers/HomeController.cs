@@ -19,12 +19,15 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-
+            if(User.Identity.IsAuthenticated) {
             Utilizador user = db.Utilizadores.Find(id);
             if (user.Estado != 0)
                 return View();
             else
                 return RedirectToAction("Index", "DashBoard");
+            }
+            else
+                return View();
         }
 
         public ActionResult About()

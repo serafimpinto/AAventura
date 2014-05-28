@@ -180,12 +180,38 @@ namespace AAventura.Controllers
         }
 
         [HttpPost]
-        public ActionResult AdicionarPergunta(int id, Pergunta pergunta)
+        public ActionResult AdicionarPergunta(Pergunta pergunta)
         {
 
             if (ModelState.IsValid)
             {
-                pergunta.Zona = db.Zonas.Find(pergunta.PerguntaId);
+                Hipotese A = new Hipotese();
+                A.Resposta = "A";
+                A.Descricao = pergunta.Ha;
+                A.Pergunta = pergunta;
+                
+                Hipotese B = new Hipotese();
+                B.Resposta = "B";
+                B.Descricao = pergunta.Hb;
+                B.Pergunta = pergunta;
+                
+                Hipotese C = new Hipotese();
+                C.Resposta = "C";
+                C.Descricao = pergunta.Hc;
+                C.Pergunta = pergunta;
+                
+                Hipotese D = new Hipotese();
+                D.Resposta = "D";
+                D.Descricao = pergunta.Hd;
+                D.Pergunta = pergunta;
+
+                db.Hipoteses.Add(A);
+                db.Hipoteses.Add(B);
+                db.Hipoteses.Add(C);
+                db.Hipoteses.Add(D);
+                pergunta.Path = "/../images/" + pergunta.imagem;
+                int x = pergunta.ZonaId;
+                pergunta.Zona = db.Zonas.Find(x);
                 pergunta.Zona.Perguntas.Add(pergunta);
                 db.Perguntas.Add(pergunta);
                 db.SaveChanges();
@@ -211,9 +237,55 @@ namespace AAventura.Controllers
             return RedirectToAction("Perguntas", "DashBoard");
         }
 
-        public ActionResult Itens()
+        public ActionResult Itens(int pag=0)
         {
+            if (pag < 0)
+            {
+                pag = 0;
+            }
+            int nelem = 1;
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
+            ViewBag.Pag = pag;
+            
+            List<Item> itens = db.Itens.ToList();
+            ViewBag.Lista = new List<Item>();
+            for (int i = pag * nelem; (i < (pag + 1) * nelem) && (i < itens.Count); i++)
+            {
+                ViewBag.Lista.Add(itens.ElementAt(i));
+            }
+            int var = itens.Count / nelem;
+            ViewBag.Elem = var;
+            ViewBag.Size = itens.Count;
+         
             return View();
+        }
+        public ActionResult AdicionarItem(Item item)
+        {
+            if (ModelState.IsValid)
+            {
+                item.Path = "/../images/" + item.imagem;
+                db.Itens.Add(item);
+                db.SaveChanges();
+                TempData["message"] = "Inserido com sucesso";
+
+                return RedirectToAction("Itens", "DashBoard");
+            }
+            else
+                return RedirectToAction("Itens","DashBoard");
+        }
+
+        public ActionResult RemoverItem(int id = 0)
+        {
+            Item item = db.Itens.Find(id);
+            if (item == null)
+            {
+                return HttpNotFound();
+            }
+            db.Itens.Remove(item);
+            db.SaveChanges();
+
+            return RedirectToAction("Itens", "DashBoard");
         }
     }
 }

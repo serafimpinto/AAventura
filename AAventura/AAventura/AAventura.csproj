@@ -187,6 +187,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JogarController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -205,6 +206,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\avatar370.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -232,7 +234,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
-    <Folder Include="Images\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
@@ -263,16 +264,19 @@
     <Content Include="Views\DashBoard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\DashBoard\Create.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\DashBoard\Delete.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\DashBoard\Utilizadores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DashBoard\Perguntas.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DashBoard\Itens.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Jogar\Aventura.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Jogar\Arcade.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

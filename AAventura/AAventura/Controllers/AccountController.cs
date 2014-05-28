@@ -121,7 +121,7 @@ namespace AAventura.Controllers
                         {
                             Nome = model.Nome,
                             Email = model.Email,
-                            Avatar = "~/images/default.jpg",
+                            Avatar = "/../images/default.jpg",
                             Estado = 1,
                             NrRespostasCertas = 0,
                             NrRespostasErradas = 0,
@@ -405,12 +405,11 @@ namespace AAventura.Controllers
             }
                 utilizador.Nome = Nome;
                 utilizador.Email = Email;
-                utilizador.Avatar = Avatar;
+                utilizador.Avatar = "/../images/" + Avatar;
                 db.SaveChanges();
             
             return RedirectToAction("Perfil", "Account", new { id=utilizador.UserId});
         }
-
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {

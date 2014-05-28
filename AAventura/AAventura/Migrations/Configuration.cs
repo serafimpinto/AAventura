@@ -27,7 +27,7 @@ namespace AAventura.Migrations
                      UserName = "admin",
                      Nome = "Serafim Pinto",
                      Email = "smcp92@gmail.com",
-                     Avatar = "/",
+                     Avatar = "~/Images/defaul.jpg",
                      Estado = 0,
                      NrRespostasCertas = 0,
                      NrRespostasErradas = 0,
