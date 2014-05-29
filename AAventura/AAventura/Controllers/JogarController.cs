@@ -55,7 +55,7 @@ namespace AAventura.Controllers
             db.SaveChanges();
             TempData["message"] = "Inserida com sucesso";
 
-            return RedirectToAction("Jogar","Jogar");
+            return RedirectToAction("Jogo","Jogar");
         }
     }
 }

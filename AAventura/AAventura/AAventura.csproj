@@ -206,7 +206,111 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="icons\button_close.png" />
+    <Content Include="icons\button_reset.png" />
     <Content Include="Images\avatar370.jpg" />
+    <Content Include="infobox\infobox.js" />
+    <Content Include="infobox\pop_up_box_top_arrow.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Africa Central.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AFRICA DO NORTE.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Africa do Sul.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfricaCentralFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfricaCentralMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfricaCentralPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfricaSulFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfricaSulMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfricaSulPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Alaska.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AlaskaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AlaskaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AlaskaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America Central.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America CentralFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America CentralMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America CentralPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America Norte 1.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America Norte 1Final.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America Norte 1Medio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\America Norte 1Pequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Argentina.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ArgentinaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ArgentinaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ArgentinaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Australia.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AustraliaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AustraliaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AustraliaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Brazil.png" />
+    <Content Include="Photoshop Cenas\IconesZona\BrazilFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\BrazilMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\BrazilPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\CanadaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\CanadaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\CanadaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\CHINA.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ChinaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ChinaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ChinaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\EGIPTO.png" />
+    <Content Include="Photoshop Cenas\IconesZona\EGIPTOFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\EGIPTOMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\EGIPTOPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Europa Central Italia.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Europa Central ItaliaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Europa Central ItaliaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Europa Central ItaliaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Groonelandia.png" />
+    <Content Include="Photoshop Cenas\IconesZona\GroonelandiaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\GroonelandiaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\GroonelandiaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\India.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IndiaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IndiaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IndiaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IndonesiaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IndonesiaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IndonesiaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IslandiaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IslandiaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\IslandiaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Islândia.png" />
+    <Content Include="Photoshop Cenas\IconesZona\JapaoFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\JapaoMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\JapaoPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Japão.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Middle East.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MiddleEastFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MiddleEastMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MiddleEastPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\Mongolia.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MongoliaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MongoliaMedia.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MongoliaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\MongoliaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\NorteAfricaFINAL.png" />
+    <Content Include="Photoshop Cenas\IconesZona\NorteAfricaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\NorteAfricaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\NoruegaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\NoruegaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\NoruegaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ReinoUnido.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ReinoUnidoFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ReinoUnidoMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ReinoUnidoPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\RUSSIA.png" />
+    <Content Include="Photoshop Cenas\IconesZona\RussiaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\RussiaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\RussiaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\TailandiaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\TailandiaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\TailandiaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\VenezuelaFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\VenezuelaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\VenezuelaPequeno.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropa.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropaFINAL.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropaMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropaPequeno.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -280,6 +384,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Pesquisa.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Jogar\Jogo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropa.psd" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
