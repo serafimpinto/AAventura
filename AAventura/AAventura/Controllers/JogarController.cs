@@ -22,13 +22,24 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-            return View();
+            if (User.Identity.IsAuthenticated)
+                return View();
+            else
+                return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Arcade()
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
+            if (User.Identity.IsAuthenticated)
+                return View();
+            else
+                return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult Jogo()
+        {
             return View();
         }
 
@@ -44,7 +55,7 @@ namespace AAventura.Controllers
             db.SaveChanges();
             TempData["message"] = "Inserida com sucesso";
 
-            return RedirectToAction("Aventura","Jogar");
+            return RedirectToAction("Jogar","Jogar");
         }
     }
 }

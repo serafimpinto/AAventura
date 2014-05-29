@@ -61,5 +61,22 @@ namespace AAventura.Controllers
             return View(db.Utilizadores.ToList());
 
         }
+
+        public ActionResult Pesquisa(string searchString)
+        {
+            var users = from m in db.Utilizadores
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.UserName.Contains(searchString));
+                /*ViewBag.Results = new List<Utilizador>();
+                for (int i = 0; (i < users.ToList().Count); i++)
+                {
+                    ViewBag.Results.Add(users.ElementAt(i));
+                }*/
+            }
+            return View(users.ToList());
+        }
     }
 }

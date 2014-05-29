@@ -21,8 +21,11 @@
                 <img src=@Model.Avatar alt="avatar" class="img-responsive imageborder">
             </section>
             <section>
-
                 <a href="@Url.Action("Edit", "Account", new { id = ViewBag.UserId})" class="btn btn-block btn-warning">Edita o teu perfil</a>
+                @if (@Model.Estado == 0)
+                {
+                <a href="@Url.Action("Index", "DashBoard")" class="btn btn-primary btn-block">Painel de administração</a>
+                }
             </section>
         </div>
         <div class="col-md-8">

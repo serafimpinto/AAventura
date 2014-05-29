@@ -224,6 +224,14 @@ namespace AAventura.Controllers
             }
         }
 
+        public void removerHipoteses(Pergunta pergunta)
+        {
+            for (int i = 0; i < pergunta.Hipoteses.Count(); i++)
+            {
+                db.Hipoteses.Remove(pergunta.Hipoteses.ElementAt(i));
+            }
+        }
+
         public ActionResult RemoverPergunta(int id = 0)
         {
             Pergunta pergunta = db.Perguntas.Find(id);
@@ -231,6 +239,7 @@ namespace AAventura.Controllers
             {
                 return HttpNotFound();
             }
+            removerHipoteses(pergunta);
             db.Perguntas.Remove(pergunta);
             db.SaveChanges();
 

@@ -12,6 +12,7 @@ namespace AAventura.Models
         public int AventuraId { get; set; }
         public int Moedas { get; set; }
         public int Exploradores { get; set; }
+        public int Dificuldade { get; set; }
         public virtual Utilizador Utilizador { get; set; }
         public virtual ICollection<Item> Itens { get; set; }
         public virtual ICollection<Zona> Zonas { get; set; }
