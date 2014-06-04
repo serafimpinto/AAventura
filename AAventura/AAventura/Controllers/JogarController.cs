@@ -38,24 +38,30 @@ namespace AAventura.Controllers
                 return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult Jogo()
-        {
-            return View();
-        }
-
-        public ActionResult CriarAventura(Aventura aventura)
+        public ActionResult JogarAventura(Aventura aventura)
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-            aventura.Exploradores = 100;
-            aventura.Moedas = 0;
-            aventura.Utilizador = db.Utilizadores.Find(id);
+            Utilizador u = db.Utilizadores.Find(id);
+            int idAventura = 0;
+            foreach (Aventura a in db.Aventuras) {
+                if (a.Utilizador.UserId == u.UserId)
+                    idAventura = a.AventuraId;
+            }
+            if (idAventura != 0) {
+                Aventura aa = db.Aventuras.Find(idAventura);
+                return View(aa);
+            }
+            else {
+                aventura.Exploradores = 100;
+                aventura.Moedas = 0;
+                aventura.Utilizador = db.Utilizadores.Find(id);
 
-            db.Aventuras.Add(aventura);
-            db.SaveChanges();
-            TempData["message"] = "Inserida com sucesso";
+                db.Aventuras.Add(aventura);
+                db.SaveChanges();
 
-            return RedirectToAction("Jogo","Jogar");
+                return View(aventura);
+            }  
         }
     }
 }

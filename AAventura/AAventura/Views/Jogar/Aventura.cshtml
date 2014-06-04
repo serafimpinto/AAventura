@@ -13,15 +13,13 @@
         </ol>
     </div>
 </header>
-
+@Html.Encode(TempData["message"])
+@using (Html.BeginForm("JogarAventura", "Jogar", FormMethod.Post)) {          
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-centered">
-            @using (Html.BeginForm("CriarAventura", "Jogar", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary()
-                @Html.Encode(TempData["message"])
             <div class="panel panel-primary animated fadeInDown">
                 <div class="panel-heading">Começar Nova Aventura</div>
                 <div class="panel-body">
@@ -33,23 +31,22 @@
                                 <option value="3">Difícil</option>
                         </select>
                 </div>
-                    <button type="submit" class=" pull-right btn btn-success btn-lg  animated bounceInRight" value="CriarAventura">Iniciar</button><br>
+                    <button type="submit" class="pull-right btn btn-success btn-lg  animated bounceInRight" value="JogarAventura">Iniciar</button><br>
+                </div>
             </div>
         </div>
-            }
-
         <div class="col-md-6 col-centered">
 
             <div class="panel panel-primary animated fadeInDown">
                 <div class="panel-heading">Continuar Aventura</div>
                 <div class="panel-body">
                     <div class="col-md-8 col-centered">
-                        <h3>Já tens aventura iniciada?</h3><br>
-                        <button type="button" class="btn btn-success btn-lg btn-block  animated bounceInUp">Continuar</button><br>
-
+                        <h3>Já tens uma aventura iniciada?</h3><br>
+                        <button type="submit" class="btn btn-success btn-lg btn-block  animated bounceInUp" value="JogarAventura">Continuar</button><br>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
+    </div>
+    }

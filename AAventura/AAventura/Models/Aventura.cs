@@ -17,6 +17,5 @@ namespace AAventura.Models
         public virtual ICollection<Item> Itens { get; set; }
         public virtual ICollection<Zona> Zonas { get; set; }
 
-
     }
 }
