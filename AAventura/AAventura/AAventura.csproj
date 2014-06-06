@@ -188,6 +188,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JogarController.cs" />
+    <Compile Include="Controllers\PerguntaController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -198,12 +199,31 @@
     <Compile Include="Models\Hipotese.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Pergunta.cs" />
+    <Compile Include="Models\PerguntaViewModel.cs" />
     <Compile Include="Models\Score.cs" />
     <Compile Include="Models\Utilizador.cs" />
     <Compile Include="Models\Zona.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css2\bootstrap.css" />
+    <Content Include="Content\css2\bootstrap.min.css" />
+    <Content Include="Content\css2\sb-admin.css" />
+    <Content Include="Content\css\animate.min.css" />
+    <Content Include="Content\css\bootstrap-theme.min.css" />
+    <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\color-default.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\lightbox.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\syntax\shCore.css" />
+    <Content Include="Content\css\syntax\shThemeDefault.css" />
+    <Content Include="Content\css\width-full.css" />
+    <Content Include="Content\font-awesome\css2\font-awesome.css" />
+    <Content Include="Content\font-awesome\css2\font-awesome.min.css" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\fonts\fontawesome-webfontba72.svg" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="icons\button_close.png" />
@@ -311,6 +331,39 @@
     <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropaFINAL.png" />
     <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropaMedio.png" />
     <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropaPequeno.png" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\holder.js.txt" />
+    <Content Include="Scripts\holder.js\100%25x120\social.html" />
+    <Content Include="Scripts\holder.js\100%25x200\lava.html" />
+    <Content Include="Scripts\holder.js\100%25x200\sky.html" />
+    <Content Include="Scripts\holder.js\100%25x200\vine.html" />
+    <Content Include="Scripts\holder.js\100x100\sky\text_avatar.html" />
+    <Content Include="Scripts\holder.js\200x170.html" />
+    <Content Include="Scripts\holder.js\200x180\social.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.countdown.min.js" />
+    <Content Include="Scripts\jquery.mixitup.min.js" />
+    <Content Include="Scripts\js2\bootstrap.js" />
+    <Content Include="Scripts\js2\bootstrap.min.js" />
+    <Content Include="Scripts\js2\flot\chart-data-flot.js" />
+    <Content Include="Scripts\js2\flot\excanvas.min.js" />
+    <Content Include="Scripts\js2\flot\jquery.flot.js" />
+    <Content Include="Scripts\js2\flot\jquery.flot.pie.js" />
+    <Content Include="Scripts\js2\flot\jquery.flot.resize.js" />
+    <Content Include="Scripts\js2\flot\jquery.flot.tooltip.min.js" />
+    <Content Include="Scripts\js2\jquery-1.10.2.js" />
+    <Content Include="Scripts\js2\morris\chart-data-morris.js" />
+    <Content Include="Scripts\js2\tablesorter\jquery.tablesorter.js" />
+    <Content Include="Scripts\js2\tablesorter\tables.js" />
+    <Content Include="Scripts\lightbox-2.6.min.js" />
+    <Content Include="Scripts\styleswitcher.js" />
+    <Content Include="Scripts\syntax\shBrushJScript.js" />
+    <Content Include="Scripts\syntax\shBrushXml.js" />
+    <Content Include="Scripts\syntax\shCore.js" />
+    <Content Include="Scripts\tablesorter\jquery.tablesorter.js" />
+    <Content Include="Scripts\tablesorter\tables.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -337,8 +390,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -390,6 +441,52 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Jogar\JogarAventura.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\fonts\fontawesome-webfontba72.eot" />
+    <Content Include="Content\fonts\fontawesome-webfontba72.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfontba72.woff" />
+    <Content Include="Content\fonts\fontawesome-webfontd41d.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\fonts\glyphicons-halflings-regulard41d.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\font-awesome\less\core.less" />
+    <Content Include="Content\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\font-awesome\less\icons.less" />
+    <Content Include="Content\font-awesome\less\larger.less" />
+    <Content Include="Content\font-awesome\less\list.less" />
+    <Content Include="Content\font-awesome\less\mixins.less" />
+    <Content Include="Content\font-awesome\less\path.less" />
+    <Content Include="Content\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\font-awesome\less\spinning.less" />
+    <Content Include="Content\font-awesome\less\stacked.less" />
+    <Content Include="Content\font-awesome\less\variables.less" />
+    <Content Include="Content\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\font-awesome\scss\_core.scss" />
+    <Content Include="Content\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\font-awesome\scss\_list.scss" />
+    <Content Include="Content\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\font-awesome\scss\_path.scss" />
+    <Content Include="Content\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\font-awesome\scss\_variables.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

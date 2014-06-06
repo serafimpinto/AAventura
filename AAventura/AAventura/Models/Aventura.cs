@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AAventura.Models
 {
@@ -16,6 +17,5 @@ namespace AAventura.Models
         public virtual Utilizador Utilizador { get; set; }
         public virtual ICollection<Item> Itens { get; set; }
         public virtual ICollection<Zona> Zonas { get; set; }
-
     }
 }

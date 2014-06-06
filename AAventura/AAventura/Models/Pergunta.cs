@@ -15,12 +15,12 @@ namespace AAventura.Models
         public string Descricao { get; set; }
         public string Path { get; set; }
         public string Ajuda { get; set; }
-        public string Resposta { get; set; } 
+        public string Resposta { get; set; }
         public float Tempo { get; set; }
         public virtual Zona Zona { get; set; }
         public virtual ICollection<Hipotese> Hipoteses { get; set; }
         [NotMapped]
-        public int ZonaId {get; set;}
+        public int ZonaId { get; set; }
         [NotMapped]
         public string Ha { get; set; }
         [NotMapped]
@@ -31,5 +31,17 @@ namespace AAventura.Models
         public string Hd { get; set; }
         [NotMapped]
         public string imagem { get; set; }
+        [NotMapped]
+        public static Dictionary<int, string> Dificuldades
+        {
+            get
+            {
+                Dictionary<int, string> valores = new Dictionary<int, string>();
+                valores.Add(1, "Fácil");
+                valores.Add(2, "Médio");
+                valores.Add(3, "Difícil");
+                return valores;
+            }
+        }
     }
 }

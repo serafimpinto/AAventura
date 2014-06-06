@@ -1,4 +1,6 @@
-﻿@{
+﻿@model AAventura.Models.Aventura
+
+@{
     ViewBag.Title = "Aventura";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,9 +16,8 @@
     </div>
 </header>
 @Html.Encode(TempData["message"])
-@using (Html.BeginForm("JogarAventura", "Jogar", FormMethod.Post)) {          
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-centered">
@@ -24,14 +25,14 @@
                 <div class="panel-heading">Começar Nova Aventura</div>
                 <div class="panel-body">
                     <div class="col-md-6 col-centered">
-                        <h3>Escolha a dificuldade antes de começar</h3><br>
-                        <select id="Dif" name="Dif" class="form-control">                            
-                                <option value="1">Fácil</option>
-                                <option value="2">Médio</option>
-                                <option value="3">Difícil</option>
-                        </select>
-                </div>
-                    <button type="submit" class="pull-right btn btn-success btn-lg  animated bounceInRight" value="JogarAventura">Iniciar</button><br>
+                        @using (Html.BeginForm("JogarAventura", "Jogar", FormMethod.Post))
+                        {
+                            @Html.ValidationSummary()
+                            <h3>Escolha a dificuldade antes de começar</h3><br>
+                            @Html.DropDownListFor(x => x.Dificuldade, new SelectList(@AAventura.Models.Pergunta.Dificuldades, "Key", "Value"), new { @class = "form-control" })
+                            <button type="submit" class="pull-right btn btn-success btn-lg  animated bounceInRight" value="JogarAventura">Iniciar</button><br>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,5 +49,4 @@
             </div>
         </div>
     </div>
-    </div>
-    }
+</div>
