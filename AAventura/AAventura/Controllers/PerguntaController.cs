@@ -27,19 +27,45 @@ namespace AAventura.Controllers
         public JsonResult Responder(int perguntaID, string resposta)
         {
             Pergunta p = db.Perguntas.Find(perguntaID);
-            bool acertou = p.Resposta == resposta;
+            int acertou;
+            if (p.Resposta == resposta)
+                acertou = 1;
+            else
+                acertou = 0;
             int userID = WebSecurity.GetUserId(User.Identity.Name);
             Utilizador u = db.Utilizadores.Find(userID);
-            if (acertou)
+            Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == userID);
+
+            if (acertou == 1)
             {
+                if (p.Dificuldade == 1)
+                    a.Moedas += 20;
+                if (p.Dificuldade == 2)
+                    a.Moedas += 15;
+                if (p.Dificuldade == 3)
+                    a.Moedas += 10;
                 u.NrRespostasCertas++;
             }
-            else
+
+            if (acertou == 0)
             {
+                if (p.Dificuldade == 1)
+                    a.Exploradores -= 5;
+                if (p.Dificuldade == 2)
+                    a.Exploradores -= 10;
+                if (p.Dificuldade == 3)
+                    a.Exploradores -= 15;
                 u.NrRespostasErradas++;
             }
             db.SaveChanges();
-            return Json(acertou, JsonRequestBehavior.AllowGet);
+
+            if (a.Exploradores <= 0)
+            {
+                acertou = -1;
+                return Json(acertou, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(acertou, JsonRequestBehavior.AllowGet);
         }
 
     }

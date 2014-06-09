@@ -39,20 +39,28 @@ namespace AAventura.Controllers
                 return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult JogarAventura(Aventura aventura)
+        public ActionResult JogarAventura(Aventura aventura, int aventuraID = -1)
         {
-            int id = WebSecurity.GetUserId(User.Identity.Name);
-            ViewBag.UserId = id;
-            Utilizador u = db.Utilizadores.Find(id);
+            if (aventuraID == -1)
+            {
+                int id = WebSecurity.GetUserId(User.Identity.Name);
+                ViewBag.UserId = id;
+                Utilizador u = db.Utilizadores.Find(id);
 
-            aventura.Exploradores = 100;
-            aventura.Moedas = 0;
-            aventura.Utilizador = db.Utilizadores.Find(id);
+                aventura.Exploradores = 100;
+                aventura.Moedas = 0;
+                aventura.Utilizador = db.Utilizadores.Find(id);
 
-            db.Aventuras.Add(aventura);
-            db.SaveChanges();
+                db.Aventuras.Add(aventura);
+                db.SaveChanges();
 
-            return View(aventura);
+                return RedirectToAction("JogarAventura", "Jogar", new { aventuraID = aventura.AventuraId });
+            }
+            else {
+                Aventura a = db.Aventuras.Find(aventuraID);
+                return View(a);
+            }
+
         }
 
         public ActionResult ContinuarAventura()
@@ -61,16 +69,27 @@ namespace AAventura.Controllers
             ViewBag.UserId = id;
             Utilizador u = db.Utilizadores.Find(id);
 
-            Aventura a = db.Aventuras.LastOrDefault(x => x.Utilizador.UserId == id);
-            if (a == null)
+            Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == id);
+            //Aventura aa = db.Aventuras.ElementAt(0);
+            if ( (a == null) || (a.Exploradores <= 0))
             {
-                throw new Exception("Não tens nada pah");
+                TempData["message"] = "Nenhuma aventura por terminar. Inicie uma agora";
+                return RedirectToAction("Aventura", "Jogar");
+
             }
             else
             {
-                return View(a);
+                return RedirectToAction("JogarAventura","Jogar",new {aventuraID = a.AventuraId});
             }
         }
+
+        public ActionResult GameOver()
+        {
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
+            return View();
+        }
+
 
     }
 }

@@ -27,7 +27,7 @@ namespace AAventura.Controllers
             return View();
         }
 
-        public ActionResult Utilizadores(int pag=0)
+        public ActionResult Utilizadores(int pag = 0)
         {
             if (pag < 0)
             {
@@ -40,14 +40,14 @@ namespace AAventura.Controllers
 
             List<Utilizador> users = db.Utilizadores.ToList();
             ViewBag.Lista = new List<Utilizador>();
-            for (int i = pag*nelem; (i < (pag+1)*nelem) && (i<users.Count); i++)
+            for (int i = pag * nelem; (i < (pag + 1) * nelem) && (i < users.Count); i++)
             {
                 ViewBag.Lista.Add(users.ElementAt(i));
             }
             int var = users.Count / nelem;
             ViewBag.Elem = var;
             ViewBag.Size = users.Count;
-            
+
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace AAventura.Controllers
             utilizador.Estado = 2;
             db.SaveChanges();
 
-            return RedirectToAction("Utilizadores","DashBoard");
+            return RedirectToAction("Utilizadores", "DashBoard");
         }
 
         public ActionResult ActivarUtilizador(int id = 0)
@@ -103,14 +103,14 @@ namespace AAventura.Controllers
                     return RedirectToAction("Utilizadores", "DashBoard");
                 }
                 catch (MembershipCreateUserException e)
-                    {
-                        ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                    }
+                {
+                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
-                   
-            return RedirectToAction("Utilizadores", "DashBoard");      
-    }
-    private static string ErrorCodeToString(MembershipCreateStatus createStatus)
+            }
+
+            return RedirectToAction("Utilizadores", "DashBoard");
+        }
+        private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
             // See http://go.microsoft.com/fwlink/?LinkID=177550 for
             // a full list of status codes.
@@ -148,7 +148,7 @@ namespace AAventura.Controllers
             }
         }
 
-        public ActionResult Perguntas(int pag=0)
+        public ActionResult Perguntas(int pag = 0)
         {
             if (pag < 0)
             {
@@ -189,17 +189,17 @@ namespace AAventura.Controllers
                 A.Resposta = "A";
                 A.Descricao = pergunta.Ha;
                 A.Pergunta = pergunta;
-                
+
                 Hipotese B = new Hipotese();
                 B.Resposta = "B";
                 B.Descricao = pergunta.Hb;
                 B.Pergunta = pergunta;
-                
+
                 Hipotese C = new Hipotese();
                 C.Resposta = "C";
                 C.Descricao = pergunta.Hc;
                 C.Pergunta = pergunta;
-                
+
                 Hipotese D = new Hipotese();
                 D.Resposta = "D";
                 D.Descricao = pergunta.Hd;
@@ -209,7 +209,7 @@ namespace AAventura.Controllers
                 db.Hipoteses.Add(B);
                 db.Hipoteses.Add(C);
                 db.Hipoteses.Add(D);
-                pergunta.Path = "/../images/" + pergunta.imagem;
+                pergunta.Path = pergunta.imagem;
                 int x = pergunta.ZonaId;
                 pergunta.Zona = db.Zonas.Find(x);
                 pergunta.Zona.Perguntas.Add(pergunta);
@@ -220,7 +220,7 @@ namespace AAventura.Controllers
             }
             else
             {
-                return RedirectToAction("Perguntas","DashBoard");
+                return RedirectToAction("Perguntas", "DashBoard");
             }
         }
 
@@ -246,7 +246,7 @@ namespace AAventura.Controllers
             return RedirectToAction("Perguntas", "DashBoard");
         }
 
-        public ActionResult Itens(int pag=0)
+        public ActionResult Itens(int pag = 0)
         {
             if (pag < 0)
             {
@@ -256,7 +256,7 @@ namespace AAventura.Controllers
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
             ViewBag.Pag = pag;
-            
+
             List<Item> itens = db.Itens.ToList();
             ViewBag.Lista = new List<Item>();
             for (int i = pag * nelem; (i < (pag + 1) * nelem) && (i < itens.Count); i++)
@@ -266,7 +266,7 @@ namespace AAventura.Controllers
             int var = itens.Count / nelem;
             ViewBag.Elem = var;
             ViewBag.Size = itens.Count;
-         
+
             return View();
         }
         public ActionResult AdicionarItem(Item item)
@@ -281,7 +281,7 @@ namespace AAventura.Controllers
                 return RedirectToAction("Itens", "DashBoard");
             }
             else
-                return RedirectToAction("Itens","DashBoard");
+                return RedirectToAction("Itens", "DashBoard");
         }
 
         public ActionResult RemoverItem(int id = 0)

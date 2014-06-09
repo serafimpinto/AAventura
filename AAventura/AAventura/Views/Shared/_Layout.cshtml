@@ -40,15 +40,15 @@
                         <input id="search" type="text" class="form-control" placeholder="Pesquisar utilizador...">
                         <span class="input-group-btn">
                             <script>
-                            function onClick() {
-                            if (document.getElementById("search").value == "") {
-                            alert("Preencha o campo pesquisa");
-                            }
-                            else {
-                            var url = "/Home/Pesquisa?searchString=" + document.getElementById("search").value;
-                            window.location.href = url;
-                            }
-                            }
+                                function onClick() {
+                                    if (document.getElementById("search").value == "") {
+                                        alert("Preencha o campo pesquisa");
+                                    }
+                                    else {
+                                        var url = "/Home/Pesquisa?searchString=" + document.getElementById("search").value;
+                                        window.location.href = url;
+                                    }
+                                }
                             </script>
                             <button type="submit" class="btn btn-default" value="Pesquisa" onclick="onClick()"><i class="fa fa-search"></i></button>
                         </span>
@@ -76,7 +76,7 @@
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Jogar <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li class="active"><a href="/Jogar/Arcade">Arcade</a></li>
+                            <li><a href="/Jogar/Arcade">Arcade</a></li>
                             <li><a href="/Jogar/Aventura">Aventura</a></li>
                         </ul>
                     </li>
@@ -134,9 +134,10 @@
         </section>
     </div>
     <footer id="footer">
-        <p>© 2014 
+        <p>
+            © 2014
             <a href="/Home/Team">Laboratórios de Informática IV - Grupo 12</a>
-        , inc. All rights reserved.
+            , inc. All rights reserved.
         </p>
     </footer>
     <div>
@@ -164,8 +165,8 @@
     <script src="~/Scripts//tablesorter/tables.js"></script>
     <script src="~/Scripts/tablesorter/jquery.tablesorter.js"></script>
 
-        <script type="text/javascript">
-            SyntaxHighlighter.all()
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
     </script>
 </body>
 </html>

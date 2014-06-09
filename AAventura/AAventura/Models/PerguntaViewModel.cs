@@ -20,7 +20,7 @@ namespace AAventura.Models
             this.Hipotese3Descricao = p.Hipoteses.ElementAt(2).Descricao;
             this.Hipotese4Descricao = p.Hipoteses.ElementAt(3).Descricao;
             this.Imagem = p.Path;
-
+            this.AjudaPergunta = p.Ajuda;
             this.ZonaNome = z.Nome;
         }
 
@@ -36,5 +36,6 @@ namespace AAventura.Models
         public string Hipotese4Descricao { get; set; }
         public string Imagem { get; set; }
         public string ZonaNome { get; set; }
+        public string AjudaPergunta { get; set; }
     }
 }

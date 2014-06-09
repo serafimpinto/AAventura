@@ -209,6 +209,19 @@
     <Content Include="Content\css2\bootstrap.css" />
     <Content Include="Content\css2\bootstrap.min.css" />
     <Content Include="Content\css2\sb-admin.css" />
+    <Content Include="Content\css3\animate.min.css" />
+    <Content Include="Content\css3\bootstrap1.min.css" />
+    <Content Include="Content\css3\color-default.css" />
+    <Content Include="Content\css3\font-awesome.css" />
+    <Content Include="Content\css3\font-awesome.min.css" />
+    <Content Include="Content\css3\lightbox.css" />
+    <Content Include="Content\css3\sb-admin.css" />
+    <Content Include="Content\css3\sb-adminbootstrap.css" />
+    <Content Include="Content\css3\sb-adminbootstrap.min.css" />
+    <Content Include="Content\css3\style.css" />
+    <Content Include="Content\css3\syntax\shCore.css" />
+    <Content Include="Content\css3\syntax\shThemeDefault.css" />
+    <Content Include="Content\css3\width-full.css" />
     <Content Include="Content\css\animate.min.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -226,11 +239,88 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="icons\button_close.png" />
-    <Content Include="icons\button_reset.png" />
+    <Content Include="Images\1.jpg" />
+    <Content Include="Images\2.jpg" />
+    <Content Include="Images\3.jpg" />
+    <Content Include="Images\4.jpg" />
+    <Content Include="Images\5.jpg" />
+    <Content Include="Images\7.jpg" />
+    <Content Include="Images\au.jpg" />
+    <Content Include="Images\avata.png" />
+    <Content Include="Images\avatar.jpg" />
     <Content Include="Images\avatar370.jpg" />
-    <Content Include="infobox\infobox.js" />
-    <Content Include="infobox\pop_up_box_top_arrow.png" />
+    <Content Include="Images\bg-devices.png" />
+    <Content Include="Images\boots.png" />
+    <Content Include="Images\bussola.png" />
+    <Content Include="Images\chicken.png" />
+    <Content Include="Images\client.jpg" />
+    <Content Include="Images\client2.jpg" />
+    <Content Include="Images\client4.jpg" />
+    <Content Include="Images\client5.jpg" />
+    <Content Include="Images\client6.jpg" />
+    <Content Include="Images\close.png" />
+    <Content Include="Images\coat.png" />
+    <Content Include="Images\default.jpg" />
+    <Content Include="Images\defaultmin.jpg" />
+    <Content Include="Images\hat.png" />
+    <Content Include="Images\jeep.png" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\m1.jpg" />
+    <Content Include="Images\m10.jpg" />
+    <Content Include="Images\m11.jpg" />
+    <Content Include="Images\m12.jpg" />
+    <Content Include="Images\m13.jpg" />
+    <Content Include="Images\m15.jpg" />
+    <Content Include="Images\m16.jpg" />
+    <Content Include="Images\m17.jpg" />
+    <Content Include="Images\m2.jpg" />
+    <Content Include="Images\m3.jpg" />
+    <Content Include="Images\m4.jpg" />
+    <Content Include="Images\m5.jpg" />
+    <Content Include="Images\m6.jpg" />
+    <Content Include="Images\m7.jpg" />
+    <Content Include="Images\m9.jpg" />
+    <Content Include="Images\medkit.png" />
+    <Content Include="Images\next.png" />
+    <Content Include="Images\nurse.png" />
+    <Content Include="Images\p.jpg" />
+    <Content Include="Images\plane.png" />
+    <Content Include="Images\pre.png" />
+    <Content Include="Images\pre2.png" />
+    <Content Include="Images\pre3.png" />
+    <Content Include="Images\prev.png" />
+    <Content Include="Images\services.png" />
+    <Content Include="Images\t1.jpg" />
+    <Content Include="Images\t2.jpg" />
+    <Content Include="Images\t3.jpg" />
+    <Content Include="Images\t4.jpg" />
+    <Content Include="Images\t5.jpg" />
+    <Content Include="Images\t6.jpg" />
+    <Content Include="Images\team.jpg" />
+    <Content Include="Images\tent.png" />
+    <Content Include="Images\toolkit.png" />
+    <Content Include="Images\train.png" />
+    <Content Include="Images\w1.jpg" />
+    <Content Include="Images\w10.jpg" />
+    <Content Include="Images\w11.jpg" />
+    <Content Include="Images\w12.jpg" />
+    <Content Include="Images\w2.jpg" />
+    <Content Include="Images\w3.jpg" />
+    <Content Include="Images\w4.jpg" />
+    <Content Include="Images\w5.jpg" />
+    <Content Include="Images\w6.jpg" />
+    <Content Include="Images\w7.jpg" />
+    <Content Include="Images\w8.jpg" />
+    <Content Include="Images\w9.jpg" />
+    <Content Include="Images\water.png" />
+    <Content Include="Images\wf1.jpg" />
+    <Content Include="Images\wf2.jpg" />
+    <Content Include="Images\wf3.jpg" />
+    <Content Include="Images\wf4.jpg" />
+    <Content Include="Photoshop Cenas\button_reset.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfeganistaoFinal.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfeganistaoMedio.png" />
+    <Content Include="Photoshop Cenas\IconesZona\AfeganistaoPequeno.png" />
     <Content Include="Photoshop Cenas\IconesZona\Africa Central.png" />
     <Content Include="Photoshop Cenas\IconesZona\AFRICA DO NORTE.png" />
     <Content Include="Photoshop Cenas\IconesZona\Africa do Sul.png" />
@@ -275,11 +365,6 @@
     <Content Include="Photoshop Cenas\IconesZona\EGIPTOFinal.png" />
     <Content Include="Photoshop Cenas\IconesZona\EGIPTOMedio.png" />
     <Content Include="Photoshop Cenas\IconesZona\EGIPTOPequeno.png" />
-    <Content Include="Photoshop Cenas\IconesZona\Europa Central Italia.png" />
-    <Content Include="Photoshop Cenas\IconesZona\Europa Central ItaliaFinal.png" />
-    <Content Include="Photoshop Cenas\IconesZona\Europa Central ItaliaMedio.png" />
-    <Content Include="Photoshop Cenas\IconesZona\Europa Central ItaliaPequeno.png" />
-    <Content Include="Photoshop Cenas\IconesZona\Groonelandia.png" />
     <Content Include="Photoshop Cenas\IconesZona\GroonelandiaFinal.png" />
     <Content Include="Photoshop Cenas\IconesZona\GroonelandiaMedio.png" />
     <Content Include="Photoshop Cenas\IconesZona\GroonelandiaPequeno.png" />
@@ -437,9 +522,6 @@
     <Content Include="Views\Home\Pesquisa.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Photoshop Cenas\IconesZona\ZonaSudOesteEuropa.psd" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Jogar\JogarAventura.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -487,6 +569,9 @@
     <Content Include="Content\font-awesome\scss\_spinning.scss" />
     <Content Include="Content\font-awesome\scss\_stacked.scss" />
     <Content Include="Content\font-awesome\scss\_variables.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Jogar\GameOver.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

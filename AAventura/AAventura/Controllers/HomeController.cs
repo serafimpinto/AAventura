@@ -27,7 +27,7 @@ namespace AAventura.Controllers
                 return RedirectToAction("Index", "DashBoard");
             }
             else*/
-                return View();
+            return View();
         }
 
         public ActionResult About()
@@ -65,7 +65,7 @@ namespace AAventura.Controllers
         public ActionResult Pesquisa(string searchString)
         {
             var users = from m in db.Utilizadores
-                         select m;
+                        select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {

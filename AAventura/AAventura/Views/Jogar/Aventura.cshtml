@@ -16,35 +16,44 @@
     </div>
 </header>
 @Html.Encode(TempData["message"])
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-centered">
             <div class="panel panel-primary animated fadeInDown">
                 <div class="panel-heading">Começar Nova Aventura</div>
                 <div class="panel-body">
-                    <div class="col-md-6 col-centered">
-                        @using (Html.BeginForm("JogarAventura", "Jogar", FormMethod.Post))
-                        {
-                            @Html.ValidationSummary()
+                    @using (Html.BeginForm("JogarAventura", "Jogar", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary()
+                        <div class="col-md-6 col-centered">
+
                             <h3>Escolha a dificuldade antes de começar</h3><br>
                             @Html.DropDownListFor(x => x.Dificuldade, new SelectList(@AAventura.Models.Pergunta.Dificuldades, "Key", "Value"), new { @class = "form-control" })
-                            <button type="submit" class="pull-right btn btn-success btn-lg  animated bounceInRight" value="JogarAventura">Iniciar</button><br>
-                        }
-                    </div>
+                            <br />
+                            <div class="col-md-6 col-centered">
+                                <button type="submit" class="btn btn-success btn-lg btn-block  animated bounceInUp" value="JogarAventura">Iniciar</button><br>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
+
         <div class="col-md-6 col-centered">
 
             <div class="panel panel-primary animated fadeInDown">
                 <div class="panel-heading">Continuar Aventura</div>
                 <div class="panel-body">
-                    <div class="col-md-8 col-centered">
-                        <h3>Já tens uma aventura iniciada?</h3><br>
-                        <button type="submit" class="btn btn-success btn-lg btn-block  animated bounceInUp" value="JogarAventura">Continuar</button><br>
-                    </div>
+                    @using (Html.BeginForm("ContinuarAventura", "Jogar", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary()
+                        <div class="col-md-8 col-centered">
+                            <h3>Já tens uma aventura iniciada?</h3><br>
+                            <div class="col-md-6 col-centered">
+                                <button type="submit" class="btn btn-success btn-lg btn-block  animated bounceInUp" value="ContinuarAventura">Continuar</button><br>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
