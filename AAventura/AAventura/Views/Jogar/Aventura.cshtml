@@ -1,0 +1,61 @@
+﻿@model AAventura.Models.Aventura
+
+@{
+    ViewBag.Title = "Aventura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">Aventura</h1>
+
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="/Home/Index">Home</a></li>
+            <li class="active">Aventura</li>
+        </ol>
+    </div>
+</header>
+@Html.Encode(TempData["message"])
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-centered">
+            <div class="panel panel-primary animated fadeInDown">
+                <div class="panel-heading">Começar Nova Aventura</div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("JogarAventura", "Jogar", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary()
+                        <div class="col-md-6 col-centered">
+
+                            <h3>Escolha a dificuldade antes de começar</h3><br>
+                            @Html.DropDownListFor(x => x.Dificuldade, new SelectList(@AAventura.Models.Pergunta.Dificuldades, "Key", "Value"), new { @class = "form-control" })
+                            <br />
+                            <div class="col-md-6 col-centered">
+                                <button type="submit" class="btn btn-success btn-lg btn-block  animated bounceInUp" value="JogarAventura">Iniciar</button><br>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-centered">
+
+            <div class="panel panel-primary animated fadeInDown">
+                <div class="panel-heading">Continuar Aventura</div>
+                <div class="panel-body">
+                    @using (Html.BeginForm("ContinuarAventura", "Jogar", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary()
+                        <div class="col-md-8 col-centered">
+                            <h3>Já tens uma aventura iniciada?</h3><br>
+                            <div class="col-md-6 col-centered">
+                                <button type="submit" class="btn btn-success btn-lg btn-block  animated bounceInUp" value="ContinuarAventura">Continuar</button><br>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

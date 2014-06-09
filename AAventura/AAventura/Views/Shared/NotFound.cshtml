@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Page Not Found";
+}
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">Error 404</h1>
+
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="/Home/Index">Home</a></li>
+            <li class="active">Error 404</li>
+        </ol>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="center-block error-404">
+                <section class="text-center">
+                    <h1>Error 404</h1>
+                    <h2>Página não encontrada</h2>
+                    <h3>Não foi possível encontar a página: @ViewBag.RequestedUrl</h3>
+                </section>
+            </div>
+        </div>
+    </div> <!-- row -->
+</div> <!-- container -->

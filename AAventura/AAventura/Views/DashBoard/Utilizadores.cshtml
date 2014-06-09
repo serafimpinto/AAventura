@@ -1,0 +1,157 @@
+﻿@model AAventura.Models.RegisterModel
+@using AAventura.Models
+@{
+    ViewBag.Title = "Utilizadores";
+    Layout = "~/Views/Shared/_LayoutDashBoard.cshtml";
+}
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1><small>DashBoard Admin</small></h1>
+            <ol class="breadcrumb">
+                <li class="active"><i class="fa fa-user"></i> Utilizadores</li>
+            </ol>
+        </div>
+    </div>
+    @Html.Encode(TempData["message"])
+    <h2>Gerir Utilizadores </h2>
+    <div class="col-centered col-lg-6">
+        <h3>Lista de Utilizadores</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped tablesorter">
+                <thead>
+                    <tr>
+                        <th>Username <a><i class="fa fa-sort"></i></a></th>
+                        <th>ID <a><i class="fa fa-sort"></i></a></th>
+                        <th>Nome <a><i class="fa fa-sort"></i></a></th>
+                        <th>Email <a><i class="fa fa-sort"></i></a></th>
+                        <th>Estado <a><i class="fa fa-sort"></i></a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in ViewBag.Lista)
+                    {
+                        <tr>
+                            <td>@item.UserName</td>
+                            <td>@item.UserId</td>
+                            <td>@item.Nome</td>
+                            <td>@item.Email</td>
+                            @if (@item.Estado == 2) {
+                            <td>Banido</td>
+                            }
+                            @if (@item.Estado == 1)
+                            {
+                            <td>Activo</td>
+                            }
+                            @if (@item.Estado == 0)
+                            {
+                            <td>Administrador</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div class="bs-example">
+            <ul class="pager">
+                @if (ViewBag.Pag > 0)
+                {
+                    <li><a href="@Url.Action("Utilizadores", "DashBoard", new { pag = ViewBag.Pag - 1 })">Anterior</a></li>
+                }
+                @if ((ViewBag.Size % ViewBag.Elem) == 0) {
+                if (ViewBag.Pag < ViewBag.Elem-1) {
+                <li><a href="@Url.Action("Utilizadores", "DashBoard", new { pag = ViewBag.Pag + 1 })">Próximo</a></li>
+                }
+                }
+                @if ((ViewBag.Size % ViewBag.Elem) != 0) { 
+                if (ViewBag.Pag < ViewBag.Elem)
+                {
+                    <li><a href="@Url.Action("Utilizadores", "DashBoard", new { pag = ViewBag.Pag + 1 })">Próximo</a></li>
+                }
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-centered">
+        <div class="form-group">
+            <label>Insira o "ID" do utilizador pretendido</label>
+            <input id="iduser" class="form-control" placeholder="Escreva aqui...">
+        </div>
+        <script>
+            function onClick() {
+                if (document.getElementById("iduser").value == "") {
+                    alert("Preencha o campo ID");
+                }
+                else {
+                    var url = "/DashBoard/BanirUtilizador/" + document.getElementById("iduser").value;
+                    window.location.href = url;
+                }
+            }
+            function onClick2() {
+                if (document.getElementById("iduser").value == "") {
+                    alert("Preencha o campo ID");
+                }
+                else {
+                    var url = "/DashBoard/ActivarUtilizador/" + document.getElementById("iduser").value;
+                    window.location.href = url;
+                }
+            }
+        </script>
+        <button type="submit" class="btn btn-success" value="ActivarUtilizador" onclick="onClick2()">Activar</button>
+        <button type="submit" class="btn btn-warning" value="BanirUtilizador" onclick="onClick()">Banir</button>
+    </div>
+@using (Html.BeginForm("AdicionarUtilizador", "DashBoard", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <h2>Adicionar Utilizadores</h2>
+    <div class="col-md-6 col-centered">
+        <div class="panel panel-primary animated fadeInDown">
+
+            <div class="panel-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="InputEmail">Email<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPassword">Username<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="InputNome">Nome</label>
+                        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="InputPassword">Password<sup>*</sup></label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="InputConfirmPassword">Confirm Password<sup>*</sup></label>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12 pull_right">
+                            <button type="submit" class="btn btn-primary pull-right" value="AdicionarUtilizador">Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div><!-- /.row -->
+}
+</div><!-- /.row -->
+
+

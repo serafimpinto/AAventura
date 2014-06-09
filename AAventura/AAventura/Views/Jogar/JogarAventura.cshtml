@@ -1,0 +1,1691 @@
+﻿@model AAventura.Models.Aventura
+@using AAventura.Models
+@{
+    Layout = null;
+}
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Play - A Aventura</title>
+
+    <!--Set up the CSS styles-->
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #B3CDE6;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: right bottom;
+            background-size: cover;
+        }
+
+        /*Adapt the following styling depending on where you want to put your map. If you want a 'full screen' map, then set the width and height to 100 percent and remove the margins.*/
+        #festival-map {
+            height: 100%;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            border-right-width: 2px;
+            border-right-color: #ffffff;
+            border-right-style: solid;
+            border-left-width: 2px;
+            border-left-color: #ffffff;
+            border-left-style: solid;
+        }
+    </style>
+
+    <!--Connect to the google maps api using your api key-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzAHnbI7uZOlxnRbMGmJL0pPjY6f_Os_Q&sensor=false"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <link href="~/content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/content/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+    <link href="~/content/css3/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="~/content/css3/animate.min.css" rel="stylesheet" media="screen">
+    <link href="~/content/css3/lightbox.css" rel="stylesheet" media="screen">
+    <link href="~/content/css3/syntax/shCore.css" rel="stylesheet" media="screen">
+    <link href="~/content/css3/syntax/shThemeDefault.css" rel="stylesheet" media="screen">
+
+    <!--<link href="~/content/css3/style.css" rel="stylesheet" media="screen" title="default">-->
+    <link href="~/content/css3/color-default.css" rel="stylesheet" media="screen" title="default">
+    <link href="~/content/css3/width-full.css" rel="stylesheet" media="screen" title="default">
+
+    <!--Main chunk of javascript that creates and controls the map.-->
+    <script type="text/javascript">
+
+        //Set up the custom styles for the map. I've created two styles so the map can switch between them depending on the zoom level. i.e. there is far less detail when the map is zoomed out.
+        //First, we read in the data describing style.
+        var style_festival = [
+          {
+              "featureType": "administrative",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+          }, {
+              "featureType": "poi",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+          }, {
+              "featureType": "transit",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+          }, {
+              "featureType": "road",
+              "stylers": [
+                { "visibility": "off" }
+              ]
+          }, {
+              "featureType": "landscape",
+              "stylers": [
+                { "color": "#2F2F32" }
+              ]
+          }, {
+              "featureType": "water",
+              "stylers": [
+                { "visibility": "on" },
+                { "color": "#4f92c6" }
+              ]
+          }
+        ];
+
+        var style_festival_zoomed = [
+          {
+              "featureType": "administrative",
+              "stylers": [
+                { "visibility": "on" }
+              ]
+          }, {
+              "featureType": "poi",
+              "stylers": [
+                { "visibility": "on" }
+              ]
+          }, {
+              "featureType": "transit",
+              "stylers": [
+                { "visibility": "on" }
+              ]
+          }, {
+              "featureType": "road",
+              "stylers": [
+                { "visibility": "on" }
+              ]
+          }, {
+              "featureType": "landscape",
+              "stylers": [
+                { "color": "#FFE200" }
+              ]
+          }, {
+              "featureType": "water",
+              "stylers": [
+                { "visibility": "on" },
+                { "color": "#4f92c6" }
+              ]
+          }, {
+              "featureType": "poi.park",
+              "elementType": "geometry",
+              "stylers": [
+                { "color": "#FFFF00" }
+              ]
+          }
+        ];
+
+        //Then we use this data to create the styles.
+        var styled_festival = new google.maps.StyledMapType(style_festival, { name: "Festival style" });
+        var styled_festival_zoomed = new google.maps.StyledMapType(style_festival_zoomed, { name: "Festival style zoomed" });
+
+        //Create the variables that will be used within the map configuration options.
+        //The latitude and longitude of the center of the map.
+        var festivalMapCenter = new google.maps.LatLng(54.722439, -0.252686);
+        //The degree to which the map is zoomed in. This can range from 0 (least zoomed) to 21 and above (most zoomed).
+        var festivalMapZoom = 3;
+        //The max and min zoom levels that are allowed.
+        var festivalMapZoomMax = 5;
+        var festivalMapZoomMin = 3;
+
+        //These options configure the setup of the map.
+        var festivalMapOptions = {
+            center: festivalMapCenter,
+            zoom: festivalMapZoom,
+            maxZoom: festivalMapZoomMax,
+            minZoom: festivalMapZoomMin,
+            panControl: false,
+            mapTypeControl: false,
+            mapTypeControlOptions: {
+                mapTypeIds: ['map_styles_festival', 'map_styles_festival_zoomed']
+            }
+        };
+
+        //Create the variable for the main map itself.
+        var festivalMap;
+
+        var resetButtonDiv = document.createElement('div');//Create the reset map button.
+        var festivalMapResetButton = new createResetButton(resetButtonDiv, festivalMap);
+
+        //When the page loads, the line below calls the function below called 'loadFestivalMap' to load up the map.
+        google.maps.event.addDomListener(window, 'load', loadFestivalMap);
+
+
+        //THE MAIN FUNCTION THAT IS CALLED WHEN THE WEB PAGE LOADS--------------------------------------------------------------------------------
+        function loadFestivalMap() {
+
+            //The empty map variable ('festivalMap') was created above. The line below creates the map, assigning it to this variable. The line below also loads the map into the div with the id 'festival-map' (see code within the 'body' tags below), and applies the 'festivalMapOptions' (above) to configure this map.
+            festivalMap = new google.maps.Map(document.getElementById("festival-map"), festivalMapOptions);
+
+            //Assigning the two map styles defined above to the map.
+            festivalMap.mapTypes.set('map_styles_festival', styled_festival);
+            festivalMap.mapTypes.set('map_styles_festival_zoomed', styled_festival_zoomed);
+            //Setting the one of the styles to display as default as the map loads.
+            festivalMap.setMapTypeId('map_styles_festival');
+
+
+            //Continuously listens out for when the zoom level changes. This includs when the map zooms when a marker is clicked.
+            google.maps.event.addListener(festivalMap, "zoom_changed", function () {
+                markerGlastonbury.setMap(null);
+                markerLeeds.setMap(null);
+                markerGlasgowbury.setMap(null);
+                markerGarden.setMap(null);
+                markerTPark.setMap(null);
+                markerRockness.setMap(null);
+                markerLatitude.setMap(null);
+                markerReading.setMap(null);
+                markerIsleOfWight.setMap(null);
+                markerNorteAfrica.setMap(null);
+                markerAfricaSul.setMap(null);
+                markerAfricaCentral.setMap(null);
+                markerRussia.setMap(null);
+                markerJapao.setMap(null);
+                markerChina.setMap(null);
+                markerMongolia.setMap(null);
+                markerIslandia.setMap(null);
+                markerMiddleEast.setMap(null);
+                markerVenezuela.setMap(null);
+                markerAfeganistao.setMap(null);
+                markerNoruega.setMap(null);
+                markerCanada.setMap(null);
+                markerGroonelandia.setMap(null);
+                markerIndia.setMap(null);
+                loadMapMarkers();
+            });
+
+            var layer = null;
+
+            google.maps.event.addListener(festivalMap, 'click', function (event) {
+                var coder = new google.maps.Geocoder();
+                var request = { location: event.latLng };
+                coder.geocode(request, function (results, status) {
+                    if (status == "OK") {
+                        var country = guessCountry(results);
+                        if (layer != null) { layer.setMap(null); }
+                        layer = new google.maps.FusionTablesLayer({
+                            query: {
+                                select: 'geometry',
+                                from: '12e2VhiXyMzHWDl6aponObHH_gvlMDoac9RTrcJ0',
+                                where: "name = '" + country + "'",
+                            },
+                            styles: [{
+                                polygonOptions: {
+                                    fillColor: "#22ac38",
+                                    fillOpacity: 1
+                                }
+                            }],
+                        });
+                        layer.setMap(festivalMap);
+
+                    }
+                });
+
+            });
+
+            festivalMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(resetButtonDiv);
+
+            //Calls the function below to load up all the map markers and pop-up boxes.
+            loadMapMarkers();
+
+        }
+        function guessCountry(geocoderResults) {
+            for (var i = 0; i < geocoderResults.length; i++) {
+                var res = geocoderResults[i];
+                for (var j = 0; j < res.address_components.length; j++) {
+                    var comp = res.address_components[j];
+                    if (jQuery.inArray("country", comp.types) >= 0) {
+                        return comp.long_name;
+                    }
+                }
+            }
+            return "??";
+        }
+
+        //Function that loads the map markers and the pop-up info boxes.
+        function loadMapMarkers() {
+
+            //Sudoeste Europeu
+
+            //Setting the position of the Glastonbury map marker.
+            var markerPositionGlastonbury = new google.maps.LatLng(43.320182, -0.285645);
+
+            //Setting the icon to be used with the Glastonbury map marker.
+            var newZoom = festivalMap.getZoom();
+
+            if (newZoom == 5) {
+                var markerIconGlastonbury = {
+                    url: '../Photoshop Cenas/IconesZona/ZonaSudOesteEuropaFinal.png',
+                    //The size image file.
+                    size: new google.maps.Size(300, 200),
+                    //The point on the image to measure the anchor from. 0, 0 is the top left.
+                    origin: new google.maps.Point(0, 0),
+                    //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
+                    anchor: new google.maps.Point(189, 116),
+
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconGlastonbury = {
+                    url: '../Photoshop Cenas/IconesZona/ZonaSudOesteEuropaMedio.png',
+                    //The size image file.
+                    size: new google.maps.Size(150, 100),
+                    //The point on the image to measure the anchor from. 0, 0 is the top left.
+                    origin: new google.maps.Point(0, 0),
+                    //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
+                    anchor: new google.maps.Point(95, 58),
+
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconGlastonbury = {
+                    url: '../Photoshop Cenas/IconesZona/ZonaSudOesteEuropaPequeno.png',
+                    //The size image file.
+                    size: new google.maps.Size(75, 50),
+                    //The point on the image to measure the anchor from. 0, 0 is the top left.
+                    origin: new google.maps.Point(0, 0),
+                    //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
+                    anchor: new google.maps.Point(47, 29),
+
+                };
+            }
+
+            //Setting the shape to be used with the Glastonbury map marker.
+            var markerShapeGlastonbury = {
+                coord: [12, 4, 216, 22, 212, 74, 157, 70, 184, 111, 125, 67, 6, 56],
+                type: 'poly'
+            };
+
+            //Creating the Glastonbury map marker.
+            markerGlastonbury = new google.maps.Marker({
+                //uses the position set above.
+                position: markerPositionGlastonbury,
+                //adds the marker to the map.
+                map: festivalMap,
+                title: 'Sudoeste Europeu',
+                //assigns the icon image set above to the marker.
+                icon: markerIconGlastonbury,
+                //assigns the icon shape set above to the marker.
+                shape: markerShapeGlastonbury,
+                //sets the z-index of the map marker.
+                zIndex: 107,
+                animation: google.maps.Animation.DROP
+            });
+
+            google.maps.event.addListener(markerGlastonbury, "click", function (e) {
+                MostrarPerguntaPorZona(43.320182, -0.285645, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerGlastonbury.getPosition());
+            });
+
+            //Egitpo
+            var markerPositionIsleOfWight = new google.maps.LatLng(19.590844, 24.082031);
+
+            if (newZoom == 5) {
+                var markerIconIsleOfWight = {
+                    url: '../Photoshop Cenas/IconesZona/EGIPTOFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconIsleOfWight = {
+                    url: '../Photoshop Cenas/IconesZona/EGIPTOMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconIsleOfWight = {
+                    url: '../Photoshop Cenas/IconesZona/EGIPTOPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeIsleOfWight = {
+                coord: [6, 30, 180, 4, 192, 70, 103, 82, 105, 105, 82, 85, 15, 93],
+                type: 'poly'
+            };
+
+            markerIsleOfWight = new google.maps.Marker({
+                position: markerPositionIsleOfWight,
+                map: festivalMap,
+                title: 'Egipto',
+                icon: markerIconIsleOfWight,
+                shape: markerShapeIsleOfWight,
+                zIndex: 108,
+
+            });
+
+            google.maps.event.addListener(markerIsleOfWight, "click", function (e) {
+                MostrarPerguntaPorZona(19.5908432, 24.0820313, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerIsleOfWight.getPosition());
+            });
+
+            //Mediterrâneo
+            var markerPositionLeeds = new google.maps.LatLng(40.808612, 15.183105);
+
+            if (newZoom == 5) {
+                var markerIconLeeds = {
+                    url: '../Photoshop Cenas/IconesZona/Europa Central ItaliaFINAL.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconLeeds = {
+                    url: '../Photoshop Cenas/IconesZona/Europa Central ItaliaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconLeeds = {
+                    url: '../Photoshop Cenas/IconesZona/Europa Central ItaliaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeLeeds = {
+                coord: [18, 8, 208, 28, 200, 113, 162, 110, 190, 145, 128, 109, 6, 93],
+                type: 'poly'
+            };
+
+            markerLeeds = new google.maps.Marker({
+                position: markerPositionLeeds,
+                map: festivalMap,
+                title: 'Mediterrânio',
+                icon: markerIconLeeds,
+                shape: markerShapeLeeds,
+                zIndex: 103
+            });
+
+            google.maps.event.addListener(markerLeeds, "click", function (e) {
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerLeeds.getPosition());
+            });
+
+            //Austrália
+            var markerPositionReading = new google.maps.LatLng(-26.794654, 134.824219);
+
+            if (newZoom == 5) {
+                var markerIconReading = {
+                    url: '../Photoshop Cenas/IconesZona/AustraliaFINAL.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconReading = {
+                    url: '../Photoshop Cenas/IconesZona/AustraliaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconReading = {
+                    url: '../Photoshop Cenas/IconesZona/AustraliaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeReading = {
+                coord: [8, 54, 177, 7, 189, 49, 65, 88, 44, 110, 47, 91, 20, 98],
+                type: 'poly'
+            };
+
+            markerReading = new google.maps.Marker({
+                position: markerPositionReading,
+                map: festivalMap,
+                title: 'Austrália',
+                icon: markerIconReading,
+                shape: markerShapeReading,
+                zIndex: 106
+            });
+
+
+            //Argentina
+            var markerPositionLatitude = new google.maps.LatLng(-36.195525, -63.544922);
+
+            if (newZoom == 5) {
+                var markerIconLatitude = {
+                    url: '../Photoshop Cenas/IconesZona/ArgentinaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconLatitude = {
+                    url: '../Photoshop Cenas/IconesZona/ArgentinaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconLatitude = {
+                    url: '../Photoshop Cenas/IconesZona/ArgentinaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeLatitude = {
+                coord: [8, 8, 184, 10, 182, 70, 111, 70, 82, 122, 87, 71, 9, 71],
+                type: 'poly'
+            };
+
+            markerLatitude = new google.maps.Marker({
+                position: markerPositionLatitude,
+                map: festivalMap,
+                title: 'Argentina',
+                icon: markerIconLatitude,
+                shape: markerShapeLatitude,
+                zIndex: 105
+            });
+
+
+            //Brazil
+            var markerPositionGarden = new google.maps.LatLng(-13.346865, -41.132813);
+
+            if (newZoom == 5) {
+                var markerIconGarden = {
+                    url: '../Photoshop Cenas/IconesZona/BrazilFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconGarden = {
+                    url: '../Photoshop Cenas/IconesZona/BrazilMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconGarden = {
+                    url: '../Photoshop Cenas/IconesZona/BrazilPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeGarden = {
+                coord: [7, 16, 128, 5, 133, 110, 107, 113, 117, 133, 82, 116, 15, 120],
+                type: 'poly'
+            };
+
+            markerGarden = new google.maps.Marker({
+                position: markerPositionGarden,
+                map: festivalMap,
+                title: 'Brazil',
+                icon: markerIconGarden,
+                shape: markerShapeGarden,
+                zIndex: 104
+            });
+
+
+            //Estados Unidos
+            var markerPositionTPark = new google.maps.LatLng(37.835819, -79.892578);
+
+            if (newZoom == 5) {
+                var markerIconTPark = {
+                    url: '../Photoshop Cenas/IconesZona/America Norte 1Final.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconTPark = {
+                    url: '../Photoshop Cenas/IconesZona/America Norte 1Medio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconTPark = {
+                    url: '../Photoshop Cenas/IconesZona/America Norte 1Pequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeTPark = {
+                coord: [17, 6, 168, 27, 157, 105, 53, 91, 32, 105, 26, 86, 7, 83],
+                type: 'poly'
+            };
+
+            markerTPark = new google.maps.Marker({
+                position: markerPositionTPark,
+                map: festivalMap,
+                title: 'Estados Unidos',
+                icon: markerIconTPark,
+                shape: markerShapeTPark,
+                zIndex: 101
+            });
+
+
+            //América Central
+            var markerPositionRockness = new google.maps.LatLng(21.238182, -102.480469);
+
+            if (newZoom == 5) {
+                var markerIconRockness = {
+                    url: '../Photoshop Cenas/IconesZona/America CentralFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconRockness = {
+                    url: '../Photoshop Cenas/IconesZona/America CentralMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconRockness = {
+                    url: '../Photoshop Cenas/IconesZona/America CentralPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeRockness = {
+                coord: [10, 7, 205, 7, 205, 57, 183, 57, 183, 76, 164, 58, 8, 58],
+                type: 'poly'
+            };
+
+            markerRockness = new google.maps.Marker({
+                position: markerPositionRockness,
+                map: festivalMap,
+                title: 'América Central',
+                icon: markerIconRockness,
+                shape: markerShapeRockness,
+                zIndex: 100
+            });
+
+
+            //Reino Unido
+            var markerPositionGlasgowbury = new google.maps.LatLng(54.822809, -6.842251)
+
+            if (newZoom == 5) {
+                var markerIconGlasgowbury = {
+                    url: '../Photoshop Cenas/IconesZona/ReinoUnidoFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconGlasgowbury = {
+                    url: '../Photoshop Cenas/IconesZona/ReinoUnidoMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconGlasgowbury = {
+                    url: '../Photoshop Cenas/IconesZona/ReinoUnidoPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeGlasgowbury = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerGlasgowbury = new google.maps.Marker({
+                position: markerPositionGlasgowbury,
+                map: festivalMap,
+                title: 'Reino Unido',
+                icon: markerIconGlasgowbury,
+                shape: markerShapeGlasgowbury,
+                zIndex: 102
+            });
+
+            //África Norte
+            var markerPositionNorteAfrica = new google.maps.LatLng(20.910134, -0.175781)
+
+            if (newZoom == 5) {
+                var markerIconNorteAfrica = {
+                    url: '../Photoshop Cenas/IconesZona/NorteAfricaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconNorteAfrica = {
+                    url: '../Photoshop Cenas/IconesZona/NorteAfricaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconNorteAfrica = {
+                    url: '../Photoshop Cenas/IconesZona/NorteAfricaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeNorteAfrica = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerNorteAfrica = new google.maps.Marker({
+                position: markerPositionNorteAfrica,
+                map: festivalMap,
+                title: 'África Norte',
+                icon: markerIconNorteAfrica,
+                shape: markerShapeNorteAfrica,
+                zIndex: 102
+            });
+
+            //África Sul
+            var markerPositionAfricaSul = new google.maps.LatLng(-23.291811, 24.785156)
+
+            if (newZoom == 5) {
+                var markerIconAfricaSul = {
+                    url: '../Photoshop Cenas/IconesZona/AfricaSulFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconAfricaSul = {
+                    url: '../Photoshop Cenas/IconesZona/AfricaSulMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconAfricaSul = {
+                    url: '../Photoshop Cenas/IconesZona/AfricaSulPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeAfricaSul = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerAfricaSul = new google.maps.Marker({
+                position: markerPositionAfricaSul,
+                map: festivalMap,
+                title: 'África Sul',
+                icon: markerIconAfricaSul,
+                shape: markerShapeAfricaSul,
+                zIndex: 102
+            });
+
+            //África Central
+            var markerPositionAfricaCentral = new google.maps.LatLng(1.730084, 23.994141)
+
+            if (newZoom == 5) {
+                var markerIconAfricaCentral = {
+                    url: '../Photoshop Cenas/IconesZona/AfricaCentralFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconAfricaCentral = {
+                    url: '../Photoshop Cenas/IconesZona/AfricaCentralMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconAfricaCentral = {
+                    url: '../Photoshop Cenas/IconesZona/AfricaCentralPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeAfricaCentral = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerAfricaCentral = new google.maps.Marker({
+                position: markerPositionAfricaCentral,
+                map: festivalMap,
+                title: 'África Central',
+                icon: markerIconAfricaCentral,
+                shape: markerShapeAfricaCentral,
+                zIndex: 102
+            });
+
+            //Rússia
+            var markerPositionRussia = new google.maps.LatLng(61.747131, 65.917969)
+
+            if (newZoom == 5) {
+                var markerIconRussia = {
+                    url: '../Photoshop Cenas/IconesZona/RussiaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconRussia = {
+                    url: '../Photoshop Cenas/IconesZona/RussiaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconRussia = {
+                    url: '../Photoshop Cenas/IconesZona/RussiaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeRussia = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerRussia = new google.maps.Marker({
+                position: markerPositionRussia,
+                map: festivalMap,
+                title: 'Rússia',
+                icon: markerIconRussia,
+                shape: markerShapeRussia,
+                zIndex: 102
+            });
+
+            //Japão
+            var markerPositionJapao = new google.maps.LatLng(36.292991, 140.185547)
+
+            if (newZoom == 5) {
+                var markerIconJapao = {
+                    url: '../Photoshop Cenas/IconesZona/JapaoFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconJapao = {
+                    url: '../Photoshop Cenas/IconesZona/JapaoMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconJapao = {
+                    url: '../Photoshop Cenas/IconesZona/JapaoPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeJapao = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerJapao = new google.maps.Marker({
+                position: markerPositionJapao,
+                map: festivalMap,
+                title: 'Japão',
+                icon: markerIconJapao,
+                shape: markerShapeJapao,
+                zIndex: 102
+            });
+
+            //China
+            var markerPositionChina = new google.maps.LatLng(34.513346, 101.118164)
+
+            if (newZoom == 5) {
+                var markerIconChina = {
+                    url: '../Photoshop Cenas/IconesZona/ChinaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconChina = {
+                    url: '../Photoshop Cenas/IconesZona/ChinaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconChina = {
+                    url: '../Photoshop Cenas/IconesZona/ChinaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeChina = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerChina = new google.maps.Marker({
+                position: markerPositionChina,
+                map: festivalMap,
+                title: 'China',
+                icon: markerIconChina,
+                shape: markerShapeChina,
+                zIndex: 102
+            });
+
+
+            //Mongólia
+            var markerPositionMongolia = new google.maps.LatLng(46.342188, 103.205566)
+
+            if (newZoom == 5) {
+                var markerIconMongolia = {
+                    url: '../Photoshop Cenas/IconesZona/MongoliaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconMongolia = {
+                    url: '../Photoshop Cenas/IconesZona/MongoliaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconMongolia = {
+                    url: '../Photoshop Cenas/IconesZona/MongoliaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeMongolia = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerMongolia = new google.maps.Marker({
+                position: markerPositionMongolia,
+                map: festivalMap,
+                title: 'Mongólia',
+                icon: markerIconMongolia,
+                shape: markerShapeMongolia,
+                zIndex: 102
+            });
+
+            //Islândia
+            var markerPositionIslandia = new google.maps.LatLng(64.156137, -18.193359)
+
+            if (newZoom == 5) {
+                var markerIconIslandia = {
+                    url: '../Photoshop Cenas/IconesZona/IslandiaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconIslandia = {
+                    url: '../Photoshop Cenas/IconesZona/IslandiaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconIslandia = {
+                    url: '../Photoshop Cenas/IconesZona/IslandiaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeIslandia = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerIslandia = new google.maps.Marker({
+                position: markerPositionIslandia,
+                map: festivalMap,
+                title: 'Islândia',
+                icon: markerIconIslandia,
+                shape: markerShapeIslandia,
+                zIndex: 102
+            });
+
+            //Médio Oriente
+            var markerPositionMiddleEast = new google.maps.LatLng(31.6299984, 41.748047)
+
+            if (newZoom == 5) {
+                var markerIconMiddleEast = {
+                    url: '../Photoshop Cenas/IconesZona/MiddleEastFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if (newZoom == 4) {
+                var markerIconMiddleEast = {
+                    url: '../Photoshop Cenas/IconesZona/MiddleEastMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if (newZoom == 3) {
+                var markerIconMiddleEast = {
+                    url: '../Photoshop Cenas/IconesZona/MiddleEastPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeMiddleEast = {
+                coord: [7, 47, 206, 6, 210, 55, 140, 68, 147, 98, 120, 75, 17, 94],
+                type: 'poly'
+            };
+
+            markerMiddleEast = new google.maps.Marker({
+                position: markerPositionMiddleEast,
+                map: festivalMap,
+                title: 'Médio Oriente',
+                icon: markerIconMiddleEast,
+                shape: markerShapeMiddleEast,
+                zIndex: 102
+            });
+
+            //Afeganistão
+            var markerPositionAfeganistao = new google.maps.LatLng(37.835819, 65.126953)
+
+            if(newZoom == 5){
+                var markerIconAfeganistao = {
+                    url: '../Photoshop Cenas/IconesZona/AfeganistaoFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if(newZoom == 4){
+                var markerIconAfeganistao = {
+                    url: '../Photoshop Cenas/IconesZona/AfeganistaoMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if(newZoom == 3){
+                var markerIconAfeganistao = {
+                    url: '../Photoshop Cenas/IconesZona/AfeganistaoPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeAfeganistao = {
+                coord: [7,47,206,6,210,55,140,68,147,98,120,75,17,94],
+                type: 'poly'
+            };
+
+            markerAfeganistao = new google.maps.Marker({
+                position: markerPositionAfeganistao,
+                map: festivalMap,
+                title: 'Afeganistão',
+                icon: markerIconAfeganistao,
+                shape: markerShapeAfeganistao,
+                zIndex:102
+            });
+
+            //Venezuela
+            var markerPositionVenezuela = new google.maps.LatLng(2.432740, -67.763672)
+
+            if(newZoom == 5){
+                var markerIconVenezuela = {
+                    url: '../Photoshop Cenas/IconesZona/VenezuelaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if(newZoom == 4){
+                var markerIconVenezuela = {
+                    url: '../Photoshop Cenas/IconesZona/VenezuelaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if(newZoom == 3){
+                var markerIconVenezuela = {
+                    url: '../Photoshop Cenas/IconesZona/VenezuelaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeVenezuela = {
+                coord: [7,47,206,6,210,55,140,68,147,98,120,75,17,94],
+                type: 'poly'
+            };
+
+            markerVenezuela = new google.maps.Marker({
+                position: markerPositionVenezuela,
+                map: festivalMap,
+                title: 'Venezuela',
+                icon: markerIconVenezuela,
+                shape: markerShapeVenezuela,
+                zIndex:102
+            });
+            //Noruega
+            var markerPositionNoruega = new google.maps.LatLng(57.862288, 13.183594)
+
+            if(newZoom == 5){
+                var markerIconNoruega = {
+                    url: '../Photoshop Cenas/IconesZona/NoruegaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if(newZoom == 4){
+                var markerIconNoruega = {
+                    url: '../Photoshop Cenas/IconesZona/NoruegaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if(newZoom == 3){
+                var markerIconNoruega = {
+                    url: '../Photoshop Cenas/IconesZona/NoruegaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeNoruega = {
+                coord: [7,47,206,6,210,55,140,68,147,98,120,75,17,94],
+                type: 'poly'
+            };
+
+            markerNoruega = new google.maps.Marker({
+                position: markerPositionNoruega,
+                map: festivalMap,
+                title: 'Noruega',
+                icon: markerIconNoruega,
+                shape: markerShapeNoruega,
+                zIndex:102
+            });
+
+            //Índia
+            var markerPositionIndia = new google.maps.LatLng(21.037083, 78.244629)
+
+            if(newZoom == 5){
+                var markerIconIndia = {
+                    url: '../Photoshop Cenas/IconesZona/IndiaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if(newZoom == 4){
+                var markerIconIndia = {
+                    url: '../Photoshop Cenas/IconesZona/IndiaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if(newZoom == 3){
+                var markerIconIndia = {
+                    url: '../Photoshop Cenas/IconesZona/IndiaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeIndia = {
+                coord: [7,47,206,6,210,55,140,68,147,98,120,75,17,94],
+                type: 'poly'
+            };
+
+            markerIndia = new google.maps.Marker({
+                position: markerPositionIndia,
+                map: festivalMap,
+                title: 'Índia',
+                icon: markerIconIndia,
+                shape: markerShapeIndia,
+                zIndex:102
+            });
+
+            //Gronelândia
+            var markerPositionGroonelandia = new google.maps.LatLng(77.345054, -42.451172)
+
+            if(newZoom == 5){
+                var markerIconGroonelandia = {
+                    url: '../Photoshop Cenas/IconesZona/GroonelandiaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if(newZoom == 4){
+                var markerIconGroonelandia = {
+                    url: '../Photoshop Cenas/IconesZona/GroonelandiaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if(newZoom == 3){
+                var markerIconGroonelandia = {
+                    url: '../Photoshop Cenas/IconesZona/GroonelandiaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeGroonelandia = {
+                coord: [7,47,206,6,210,55,140,68,147,98,120,75,17,94],
+                type: 'poly'
+            };
+
+            markerGroonelandia = new google.maps.Marker({
+                position: markerPositionGroonelandia,
+                map: festivalMap,
+                title: 'Gronelândia',
+                icon: markerIconGroonelandia,
+                shape: markerShapeGroonelandia,
+                zIndex:102
+            });
+
+            //Canadá
+            var markerPositionCanada = new google.maps.LatLng(53.923751, -110.214844)
+
+            if(newZoom == 5){
+                var markerIconCanada = {
+                    url: '../Photoshop Cenas/IconesZona/CanadaFinal.png',
+                    size: new google.maps.Size(300, 200),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(189, 116)
+                };
+            }
+            if(newZoom == 4){
+                var markerIconCanada = {
+                    url: '../Photoshop Cenas/IconesZona/CanadaMedio.png',
+                    size: new google.maps.Size(150, 100),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(95, 58)
+                };
+            }
+            if(newZoom == 3){
+                var markerIconCanada = {
+                    url: '../Photoshop Cenas/IconesZona/CanadaPequeno.png',
+                    size: new google.maps.Size(75, 50),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(47, 29)
+                };
+            }
+
+            var markerShapeCanada = {
+                coord: [7,47,206,6,210,55,140,68,147,98,120,75,17,94],
+                type: 'poly'
+            };
+
+            markerCanada = new google.maps.Marker({
+                position: markerPositionCanada,
+                map: festivalMap,
+                title: 'Canadá',
+                icon: markerIconCanada,
+                shape: markerShapeCanada,
+                zIndex:102
+            });
+        }
+
+
+        //Function that zooms the map in (if has not been zoomed already) when a map marker is clicked.
+        function setZoomWhenMarkerClicked() {
+            var currentZoom = festivalMap.getZoom();
+            if (currentZoom < 7) {
+                festivalMap.setZoom(7);
+            }
+        }
+
+        //Function that resets the z-indexes back to their orignal values.
+        function resetZindexes() {
+            markerRockness.setZIndex(100);
+            markerTPark.setZIndex(101);
+            markerGlasgowbury.setZIndex(102);
+            markerLeeds.setZIndex(103);
+            markerGarden.setZIndex(104);
+            markerLatitude.setZIndex(105);
+            markerReading.setZIndex(106);
+            markerGlastonbury.setZIndex(107);
+            markerIsleOfWight.setZIndex(108);
+        }
+
+        //Function that creates the 'Reser map' button.
+        function createResetButton(resetButtonDiv) {
+            resetButtonDiv.style.padding = '0px';
+            controlUI2 = document.createElement('div');
+            controlUI2.style.backgroundColor = '#ffffff';
+            controlUI2.style.borderRadius = '5px';
+            controlUI2.style.margin = '10px';
+            controlUI2.style.paddingTop = '2px';
+            controlUI2.style.paddingBottom = '2px';
+            controlUI2.style.paddingLeft = '2px';
+            controlUI2.style.paddingRight = '5px';
+            controlUI2.style.textAlign = 'center';
+            controlUI2.style.width = '148px';
+            controlUI2.style.height = '31px';
+            controlUI2.innerHTML = '<div onClick="handelRequests(\'reset\')" OnMouseOver="this.style.cursor=\'pointer\';" OnMouseOut="this.style.cursor=\'default\';" ><img src="../Photoshop Cenas/button_reset.png" width="148" height="31" border="0"/></div>';
+            resetButtonDiv.appendChild(controlUI2);
+        }
+        //Function that is called when either the 'smaller events', unbrella or the 'reset map' buttons are clicked.
+        function handelRequests(buttonPressed) {
+            if (buttonPressed === "reset") {
+                $(".infoBox").remove();
+
+                //Resets the zoom, map position and marker z-indexes back to their orignal position. Also closes all infoboxes currently open.
+                festivalMap.setZoom(festivalMapZoom);
+                festivalMap.setCenter(festivalMapCenter);
+                resetZindexes();
+                //This is a function I've created (below) that closes any info boxes that are open.
+            }
+        }
+
+        function MostrarPerguntaPorZona(lat, long, dif) {
+            $.ajax({
+                url: '/Pergunta/GetRandomByZona',
+                data: {latitude: lat, longitude: long, dificuldade:dif },
+                datatype: "json",
+                success: function(data){
+                    $('#perguntaID').val(data.PerguntaId);
+                    $('#zonaNome').text(data.ZonaNome);
+                    $('#pergundaDescricao').text(data.Descricao);
+                    $('#Resposta1Descricao').text(data.Hipotese1Descricao);
+                    $('#Resposta2Descricao').text(data.Hipotese2Descricao);
+                    $('#Resposta3Descricao').text(data.Hipotese3Descricao);
+                    $('#Resposta4Descricao').text(data.Hipotese4Descricao);
+                    $("#PerguntaImagem").attr("src", data.Imagem);
+                    $("#AjudaPergunta").text(data.AjudaPergunta);
+                }
+            });
+            $('#myModal').modal('toggle');
+        }
+        function ReloadPage() {
+            location.reload();
+        };
+
+        function SubmeterPergunta(){
+            var resp = $('input[name=resposta]:checked').val();
+            var perID = $('#perguntaID').val();
+            if (!resp) {
+                alert('Seleccione uma resposta');
+            }else{
+                $.ajax({
+                    url: '/Pergunta/Responder',
+                    data: {perguntaID: perID, resposta:resp  },
+                    type: "POST",
+                    datatype: "json",
+                    success: function(data){
+                        if (data == 1) {
+                            alert('Parabéns!! Resposta Certa!');
+                        }else{
+                            if(data == 0)
+                                alert('Resposta Errada!');
+                            else {
+                                alert('Resposta Errada! Ficou sem exploradores. A sua Aventura terminou!');
+                                var url = '@Url.Action("GameOver", "Jogar")';
+                                window.location.href = url;
+                            }
+                        }
+                    }
+                });
+                $('#myModal').modal('hide')
+                $('#topmenubar').ready(function() {
+                    setTimeout("ReloadPage()", 100);
+                });
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="zonaNome">Nome da Zona</h4>
+                </div>
+                <div id="opcoes" class="modal-body">
+                    <input type="hidden" id="perguntaID" />
+                    <h2 id="pergundaDescricao">Pergunda</h2>
+                    @Html.RadioButton("resposta", "A", new { id = "resp1" }) <label id="Resposta1Descricao"></label><br />
+                    @Html.RadioButton("resposta", "B", new { id = "resp2" }) <label id="Resposta2Descricao"></label><br />
+                    @Html.RadioButton("resposta", "C", new { id = "resp3" }) <label id="Resposta3Descricao"></label><br />
+                    @Html.RadioButton("resposta", "D", new { id = "resp4" }) <label id="Resposta4Descricao"></label><br />
+                    <br />
+                    <div>
+                        <img src="" alt="" width="200px" height="200px" id="PerguntaImagem" />
+                    </div>
+                    <br />
+                    <button type="button" onclick="$('#AjudaPergunta').toggle();">Usar Ajuda</button>
+                    <div class="top-right" id="AjudaPergunta" style="display:none">
+                        <h4>Descricao Pergunta</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnResponder" onclick="SubmeterPergunta()">Responder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="topmenubar">
+        <!--header loja-->
+        <nav class="navbar navbar-static-top navbar-mind" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-mind-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-bars fa-inverse"></i>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse navbar-mind-collapse">
+
+                    <ul class="nav navbar-nav navbar-left">
+
+                        <li class="pull-left">
+                            <label>Moedas: @Model.Moedas<i class="fa fa-money"></i></label>
+                        </li>
+                        <br />
+                        <li>
+                            <label>Exploradores: @Model.Exploradores<i class="fa fa-child"></i></label>
+                        </li>
+
+                    </ul> <!-- nav nabvar-nav -->
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Loja</a>
+                            <div class="dropdown-menu dropdown-loja animated fadeInUp">
+                                <div class="col-md-12">
+                                    <h3 class="section-title"> Loja </h3>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/avata.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Binóculos</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Amplia o teu alcance.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/chicken.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Comida</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Alimenta-te bem.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/jeep.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Jipe</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Navega mais seguramente.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/bussola.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Bússola</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Não percas o Norte!
+                                                    <br />
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/hat.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Chapéu</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Evita apanhares sol.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/medkit.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Kit médico</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Cura os exploradores.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/water.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Água</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Bebe água, não desidrates!
+                                                    <br />
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/coat.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Casaco</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Agasalha-te do frio!
+                                                    <br />
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/toolkit.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Ferramentas</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Conserta o equipamento.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/tent.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Tenda</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Acampa com segurança.
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/plane.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Avião</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Navega sem limites!
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="mind-features-item hover">
+                                            <div class="item-icon">
+                                                <img src="~/Images/train.png" class="imageborder" alt="image">
+                                            </div>
+                                            <div class="item-content">
+                                                <h3>Comboio</h3>
+                                                <div class="col-md-12 col-centered">
+                                                    Apanha o combóio!
+                                                    <button type="button" class="btn btn-success">Comprar</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- mind-features-item -->
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <a href="~/Home/Index">Sair do Jogo</a>
+                        </li>
+
+                    </ul> <!-- nav nabvar-nav -->
+                </div><!-- navbar-collapse -->
+            </div> <!-- container -->
+        </nav> <!-- navbar navbar-default -->
+    </div>
+    <div id="map-canvas"></div>
+    <!--Create the div to hold the map.-->
+    <div id="festival-map"></div>
+
+</body>

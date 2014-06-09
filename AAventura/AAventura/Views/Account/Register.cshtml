@@ -1,0 +1,70 @@
+﻿@model AAventura.Models.RegisterModel
+@using AAventura.Models
+
+@{
+    ViewBag.Title = "Register";
+}
+<header class="wrap-title">
+    <div class="container">
+        <h1 class="page-title">Registar</h1>
+
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="/Home/Index">Home</a></li>
+
+            <li class="active">Registar</li>
+        </ol>
+    </div>
+</header>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+<div class="container">
+    <div class=" col-md-7 col-centered">
+        <h2 class="section-title">Cria conta</h2>
+        <div class="panel panel-primary animated fadeInDown col-centered">
+            <div class="panel-heading">Registar</div>
+            <div class="panel-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="InputEmail">Email<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPassword">Username<sup>*</sup></label>
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="InputNome">Nome</label>
+                        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="InputPassword">Password<sup>*</sup></label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="InputConfirmPassword">Confirm Password<sup>*</sup></label>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="inlineCheckbox1" value="option1" required> Li os <a href="#">Termos e Condições</a>.
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary pull-right" value="Register">Registar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> <!-- container  -->
+}
