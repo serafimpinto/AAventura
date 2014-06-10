@@ -52,7 +52,7 @@
     <link href="~/content/css3/syntax/shCore.css" rel="stylesheet" media="screen">
     <link href="~/content/css3/syntax/shThemeDefault.css" rel="stylesheet" media="screen">
 
-    <!--<link href="~/content/css3/style.css" rel="stylesheet" media="screen" title="default">-->
+    <link href="~/content/css3/style.css" rel="stylesheet" media="screen" title="default">
     <link href="~/content/css3/color-default.css" rel="stylesheet" media="screen" title="default">
     <link href="~/content/css3/width-full.css" rel="stylesheet" media="screen" title="default">
 
@@ -330,7 +330,7 @@
                 shape: markerShapeGlastonbury,
                 //sets the z-index of the map marker.
                 zIndex: 107,
-                animation: google.maps.Animation.DROP
+                //animation: google.maps.Animation.DROP
             });
 
             google.maps.event.addListener(markerGlastonbury, "click", function (e) {
@@ -433,6 +433,7 @@
             });
 
             google.maps.event.addListener(markerLeeds, "click", function (e) {
+                MostrarPerguntaPorZona(40.808612, 15.183105, @Model.Dificuldade);
                 this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
                 setZoomWhenMarkerClicked();
                 festivalMap.setCenter(markerLeeds.getPosition());
@@ -480,6 +481,12 @@
                 zIndex: 106
             });
 
+            google.maps.event.addListener(markerReading, "click", function (e) {
+                MostrarPerguntaPorZona(-26.794654, 134.824219, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerReading.getPosition());
+            });
 
             //Argentina
             var markerPositionLatitude = new google.maps.LatLng(-36.195525, -63.544922);
@@ -523,6 +530,12 @@
                 zIndex: 105
             });
 
+            google.maps.event.addListener(markerLatitude, "click", function (e) {
+                MostrarPerguntaPorZona(-36.195525, -63.544922, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerLatitude.getPosition());
+            });
 
             //Brazil
             var markerPositionGarden = new google.maps.LatLng(-13.346865, -41.132813);
@@ -566,6 +579,12 @@
                 zIndex: 104
             });
 
+            google.maps.event.addListener(markerGarden, "click", function (e) {
+                MostrarPerguntaPorZona(-13.346865, -41.132813, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerGarden.getPosition());
+            });
 
             //Estados Unidos
             var markerPositionTPark = new google.maps.LatLng(37.835819, -79.892578);
@@ -609,6 +628,12 @@
                 zIndex: 101
             });
 
+            google.maps.event.addListener(markerTPark, "click", function (e) {
+                MostrarPerguntaPorZona(37.835819, -79.892578, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerTPark.getPosition());
+            });
 
             //América Central
             var markerPositionRockness = new google.maps.LatLng(21.238182, -102.480469);
@@ -652,6 +677,12 @@
                 zIndex: 100
             });
 
+            google.maps.event.addListener(markerRockness, "click", function (e) {
+                MostrarPerguntaPorZona(21.238182, -102.480469, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerRockness.getPosition());
+            });
 
             //Reino Unido
             var markerPositionGlasgowbury = new google.maps.LatLng(54.822809, -6.842251)
@@ -693,6 +724,13 @@
                 icon: markerIconGlasgowbury,
                 shape: markerShapeGlasgowbury,
                 zIndex: 102
+            });
+
+            google.maps.event.addListener(markerGlasgowbury, "click", function (e) {
+                MostrarPerguntaPorZona(54.822809, -6.842251, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerGlasgowbury.getPosition());
             });
 
             //África Norte
@@ -737,8 +775,15 @@
                 zIndex: 102
             });
 
+            google.maps.event.addListener(markerNorteAfrica, "click", function (e) {
+                MostrarPerguntaPorZona(20.910134, -0.175781, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerNorteAfrica.getPosition());
+            });
+
             //África Sul
-            var markerPositionAfricaSul = new google.maps.LatLng(-23.291811, 24.785156)
+            var markerPositionAfricaSul  = new google.maps.LatLng(-23.291811, 24.785156)
 
             if (newZoom == 5) {
                 var markerIconAfricaSul = {
@@ -777,6 +822,13 @@
                 icon: markerIconAfricaSul,
                 shape: markerShapeAfricaSul,
                 zIndex: 102
+            });
+
+            google.maps.event.addListener(markerAfricaSul, "click", function (e) {
+                MostrarPerguntaPorZona(-23.291811, 24.785156, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerAfricaSul.getPosition());
             });
 
             //África Central
@@ -821,6 +873,13 @@
                 zIndex: 102
             });
 
+            google.maps.event.addListener(markerAfricaCentral, "click", function (e) {
+                MostrarPerguntaPorZona(1.730084, 23.994141, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerAfricaCentral.getPosition());
+            });
+
             //Rússia
             var markerPositionRussia = new google.maps.LatLng(61.747131, 65.917969)
 
@@ -861,6 +920,13 @@
                 icon: markerIconRussia,
                 shape: markerShapeRussia,
                 zIndex: 102
+            });
+
+            google.maps.event.addListener(markerRussia, "click", function (e) {
+                MostrarPerguntaPorZona(61.747131, 65.917969, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerRussia.getPosition());
             });
 
             //Japão
@@ -905,6 +971,13 @@
                 zIndex: 102
             });
 
+            google.maps.event.addListener(markerJapao, "click", function (e) {
+                MostrarPerguntaPorZona(36.292991, 140.185547, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerJapao.getPosition());
+            });
+
             //China
             var markerPositionChina = new google.maps.LatLng(34.513346, 101.118164)
 
@@ -947,6 +1020,12 @@
                 zIndex: 102
             });
 
+            google.maps.event.addListener(markerChina, "click", function (e) {
+                MostrarPerguntaPorZona(34.513346, 101.118164, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerChina.getPosition());
+            });
 
             //Mongólia
             var markerPositionMongolia = new google.maps.LatLng(46.342188, 103.205566)
@@ -988,6 +1067,13 @@
                 icon: markerIconMongolia,
                 shape: markerShapeMongolia,
                 zIndex: 102
+            });
+
+            google.maps.event.addListener(markerMongolia, "click", function (e) {
+                MostrarPerguntaPorZona(46.342188, 103.205566, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerMongolia.getPosition());
             });
 
             //Islândia
@@ -1032,6 +1118,13 @@
                 zIndex: 102
             });
 
+            google.maps.event.addListener(markerIslandia, "click", function (e) {
+                MostrarPerguntaPorZona(64.156137, -18.193359, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerIslandia.getPosition());
+            });
+
             //Médio Oriente
             var markerPositionMiddleEast = new google.maps.LatLng(31.6299984, 41.748047)
 
@@ -1072,6 +1165,13 @@
                 icon: markerIconMiddleEast,
                 shape: markerShapeMiddleEast,
                 zIndex: 102
+            });
+
+            google.maps.event.addListener(markerMiddleEast, "click", function (e) {
+                MostrarPerguntaPorZona(31.6299984, 41.748047, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerMiddleEast.getPosition());
             });
 
             //Afeganistão
@@ -1116,6 +1216,13 @@
                 zIndex:102
             });
 
+            google.maps.event.addListener(markerAfeganistao, "click", function (e) {
+                MostrarPerguntaPorZona(37.835819, 65.126953, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerAfeganistao.getPosition());
+            });
+
             //Venezuela
             var markerPositionVenezuela = new google.maps.LatLng(2.432740, -67.763672)
 
@@ -1157,6 +1264,14 @@
                 shape: markerShapeVenezuela,
                 zIndex:102
             });
+
+            google.maps.event.addListener(markerVenezuela, "click", function (e) {
+                MostrarPerguntaPorZona(2.432740, -67.763672, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerVenezuela.getPosition());
+            });
+
             //Noruega
             var markerPositionNoruega = new google.maps.LatLng(57.862288, 13.183594)
 
@@ -1197,6 +1312,13 @@
                 icon: markerIconNoruega,
                 shape: markerShapeNoruega,
                 zIndex:102
+            });
+
+            google.maps.event.addListener(markerNoruega, "click", function (e) {
+                MostrarPerguntaPorZona(57.862288, 13.183594, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerNoruega.getPosition());
             });
 
             //Índia
@@ -1241,6 +1363,13 @@
                 zIndex:102
             });
 
+            google.maps.event.addListener(markerIndia, "click", function (e) {
+                MostrarPerguntaPorZona(21.037083, 78.244629, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerIndia.getPosition());
+            });
+
             //Gronelândia
             var markerPositionGroonelandia = new google.maps.LatLng(77.345054, -42.451172)
 
@@ -1283,6 +1412,13 @@
                 zIndex:102
             });
 
+            google.maps.event.addListener(markerGroonelandia, "click", function (e) {
+                MostrarPerguntaPorZona(77.345054, -42.451172, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerGroonelandia.getPosition());
+            });
+
             //Canadá
             var markerPositionCanada = new google.maps.LatLng(53.923751, -110.214844)
 
@@ -1323,6 +1459,13 @@
                 icon: markerIconCanada,
                 shape: markerShapeCanada,
                 zIndex:102
+            });
+
+            google.maps.event.addListener(markerCanada, "click", function (e) {
+                MostrarPerguntaPorZona(53.923751, -110.214844, @Model.Dificuldade);
+                this.setZIndex(google.maps.Marker.MAX_ZINDEX + 1);
+                setZoomWhenMarkerClicked();
+                festivalMap.setCenter(markerCanada.getPosition());
             });
         }
 
@@ -1393,10 +1536,17 @@
                     $('#Resposta4Descricao').text(data.Hipotese4Descricao);
                     $("#PerguntaImagem").attr("src", data.Imagem);
                     $("#AjudaPergunta").text(data.AjudaPergunta);
+                    /*if(data.Conq == 1)
+                        alert('Esta zona ja foi conquistada! Continua a explorar.');
+                    else {
+                        $('#myModal').modal('toggle');
+                    }*/
                 }
             });
             $('#myModal').modal('toggle');
         }
+
+
         function ReloadPage() {
             location.reload();
         };
@@ -1456,13 +1606,13 @@
                         <img src="" alt="" width="200px" height="200px" id="PerguntaImagem" />
                     </div>
                     <br />
-                    <button type="button" onclick="$('#AjudaPergunta').toggle();">Usar Ajuda</button>
+                    <button type="button" class="btn btn-success" onclick="$('#AjudaPergunta').toggle();">Usar Ajuda</button>
                     <div class="top-right" id="AjudaPergunta" style="display:none">
                         <h4>Descricao Pergunta</h4>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-primary" id="btnResponder" onclick="SubmeterPergunta()">Responder</button>
                 </div>
             </div>

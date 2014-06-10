@@ -19,9 +19,22 @@ namespace AAventura.Controllers
 
         public JsonResult GetRandomByZona(float latitude, float longitude, int dificuldade)
         {
+            int userID = WebSecurity.GetUserId(User.Identity.Name);
+            Utilizador u = db.Utilizadores.Find(userID);
+            Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == userID);
             Zona z = db.Zonas.FirstOrDefault(x => x.Latitude == latitude && x.Longitude == longitude);
-            Pergunta p = z.Perguntas.FirstOrDefault(x => x.Dificuldade == dificuldade);
-            return Json(new PerguntaViewModel(p, z), JsonRequestBehavior.AllowGet);
+            
+            List<Pergunta> filter = z.Perguntas.Where(x => x.Dificuldade == dificuldade).ToList();
+            Random rnd = new Random();
+            int r = rnd.Next(filter.Count);
+            Pergunta p = filter[r];
+
+            bool aventuras = z.Aventuras.Any(item => item.AventuraId == a.AventuraId);
+            bool zonas = a.Zonas.Any(item => item.ZonaId == z.ZonaId);
+            int conquistada = 0;
+            if (aventuras && zonas)
+                conquistada = 1;
+            return Json(new PerguntaViewModel(p, z, conquistada), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Responder(int perguntaID, string resposta)
@@ -35,7 +48,7 @@ namespace AAventura.Controllers
             int userID = WebSecurity.GetUserId(User.Identity.Name);
             Utilizador u = db.Utilizadores.Find(userID);
             Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == userID);
-
+            int n = a.Zonas.Count();
             if (acertou == 1)
             {
                 if (p.Dificuldade == 1)
@@ -45,6 +58,9 @@ namespace AAventura.Controllers
                 if (p.Dificuldade == 3)
                     a.Moedas += 10;
                 u.NrRespostasCertas++;
+                Zona z = p.Zona;
+                a.Zonas.Add(z);
+                z.Aventuras.Add(a);
             }
 
             if (acertou == 0)

@@ -7,7 +7,7 @@ namespace AAventura.Models
 {
     public class PerguntaViewModel
     {
-        public PerguntaViewModel(Pergunta p, Zona z)
+        public PerguntaViewModel(Pergunta p, Zona z, int conquistada)
         {
             this.PerguntaId = p.PerguntaId;
             this.Descricao = p.Descricao;
@@ -22,9 +22,11 @@ namespace AAventura.Models
             this.Imagem = p.Path;
             this.AjudaPergunta = p.Ajuda;
             this.ZonaNome = z.Nome;
+            this.Conq = conquistada;
         }
 
         public int PerguntaId { get; set; }
+        public int Conq { get; set; }
         public string Descricao { get; set; }
         public string Hipotese1 { get; set; }
         public string Hipotese2 { get; set; }
