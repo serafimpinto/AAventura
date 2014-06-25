@@ -187,6 +187,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\JogarController.cs" />
     <Compile Include="Controllers\PerguntaController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />

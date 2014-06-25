@@ -89,7 +89,5 @@ namespace AAventura.Controllers
             ViewBag.UserId = id;
             return View();
         }
-
-
     }
 }
