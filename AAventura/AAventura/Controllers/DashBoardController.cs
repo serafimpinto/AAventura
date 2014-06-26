@@ -252,7 +252,7 @@ namespace AAventura.Controllers
             {
                 pag = 0;
             }
-            int nelem = 1;
+            int nelem = 4;
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
             ViewBag.Pag = pag;

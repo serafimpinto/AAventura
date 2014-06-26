@@ -50,13 +50,15 @@ namespace AAventura.Controllers
             Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == userID);
             int n = a.Zonas.Count();
 
-            if(flag == 1) {
-                if (a.Dificuldade == 1)
-                    a.Moedas -= 7;
-                if (a.Dificuldade == 2)
-                    a.Moedas -= 14;
-                if (a.Dificuldade == 3)
-                    a.Moedas -= 21;
+            if (flag == 1) {
+                if (!String.IsNullOrEmpty(p.Ajuda)) {
+                    if (a.Dificuldade == 1 && a.Moedas >=7)
+                        a.Moedas -= 7;
+                    if (a.Dificuldade == 2 && a.Moedas >=14)
+                        a.Moedas -= 14;
+                    if (a.Dificuldade == 3 && a.Moedas >=21)
+                        a.Moedas -= 21;
+                }
             }
 
             if (acertou == 1)
