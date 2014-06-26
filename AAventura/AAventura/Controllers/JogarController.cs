@@ -54,9 +54,21 @@ namespace AAventura.Controllers
                 db.Aventuras.Add(aventura);
                 db.SaveChanges();
 
+                List<Item> itens = db.Itens.ToList();
+                ViewBag.Lista = new List<Item>();
+                for (int i = 0; i < itens.Count; i++)
+                {
+                    ViewBag.Lista.Add(itens.ElementAt(i));
+                }
                 return RedirectToAction("JogarAventura", "Jogar", new { aventuraID = aventura.AventuraId });
             }
             else {
+                List<Item> itens = db.Itens.ToList();
+                ViewBag.Lista = new List<Item>();
+                for (int i = 0; i < itens.Count; i++)
+                {
+                    ViewBag.Lista.Add(itens.ElementAt(i));
+                }
                 Aventura a = db.Aventuras.Find(aventuraID);
                 return View(a);
             }
