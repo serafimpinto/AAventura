@@ -14,6 +14,7 @@ namespace AAventura.Models
         public string Path { get; set; }
         public float Custo { get; set; }
         public string Descricao { get; set; }
+        public string Nome { get; set; }
         public virtual ICollection<Aventura> Aventuras { get; set; }
         [NotMapped]
         public string imagem { get; set; }

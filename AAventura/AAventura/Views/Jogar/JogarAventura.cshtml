@@ -1679,7 +1679,7 @@
                                     <h3 class="section-title"> Loja </h3>
                                     @foreach (var item in ViewBag.Lista)
                                     {
-                                        using (Html.BeginForm("Comprar", "Item", new { id = @item.ItemId },FormMethod.Post))
+                                        using (Html.BeginForm("Comprar", "Item", new { id = @item.ItemId }, FormMethod.Post))
                                         {
                                             <div class="col-xs-3">
                                                 <div class="mind-features-item hover">
@@ -1687,7 +1687,14 @@
                                                         <img src=@item.Path class="imageborder" alt="image">
                                                     </div>
                                                     <div class="item-content">
-                                                        <h3>Custo: @item.Custo $</h3>
+                                                        @if (@Model.Itens.ToList().Any(x => x.ItemId == @item.ItemId))
+                                                        {
+                                                            <h3>@item.Nome</h3>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h3>Custo: @item.Custo $</h3>
+                                                        }
                                                         <div class="col-md-12 col-centered">
                                                             @item.Descricao
                                                             @if (@Model.Itens.ToList().Any(x => x.ItemId == @item.ItemId))
