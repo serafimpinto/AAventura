@@ -25,6 +25,8 @@ namespace AAventura.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
             return View();
         }
 
@@ -57,6 +59,8 @@ namespace AAventura.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
             WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
@@ -66,7 +70,8 @@ namespace AAventura.Controllers
         {
             int id2 = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id2;
-            Utilizador u = db.Utilizadores.Find(id);
+            Utilizador u = db.Utilizadores.Find(id2);
+            ViewBag.UserImg = u.Avatar;
             if (u == null)
             {
                 return HttpNotFound();
@@ -80,6 +85,8 @@ namespace AAventura.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
             return View();
         }
 
@@ -138,7 +145,6 @@ namespace AAventura.Controllers
                 }
 
             }
-
             // If we got this far, something failed, redisplay form
             return View();
         }
@@ -185,7 +191,9 @@ namespace AAventura.Controllers
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             int id = WebSecurity.GetUserId(User.Identity.Name);
+            Utilizador u = db.Utilizadores.Find(id);
             ViewBag.UserId = id;
+            ViewBag.UserImg = u.Avatar;
             return View();
         }
 
@@ -247,8 +255,6 @@ namespace AAventura.Controllers
                     }
                 }
             }
-            int id = WebSecurity.GetUserId(User.Identity.Name);
-            ViewBag.UserId = id;
             // If we got this far, something failed, redisplay form
             return View();
         }
@@ -389,6 +395,7 @@ namespace AAventura.Controllers
                 return HttpNotFound();
             }
             ViewBag.UserId = id;
+            ViewBag.UserImg = utilizador.Avatar;
             return View(utilizador);
         }
 

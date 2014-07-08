@@ -24,8 +24,8 @@
         <header id="header" class="hidden-xs">
             <div class="container">
                 <div id="header-title">
-                    <h1 class="animated fadeInDown"><a href="@Url.Action("Index","Home")">A<span>Aventura</span></a></h1>
-                    <p class="animated fadeInLeft">Volta ao Mundo em 80 Questões</p>
+                    <h1 class="animated fadeInDown"><a href="@Url.Action("Index","Home")"><img src="~/Images/logoli4.png" style="height: 110px;" /></a></h1>
+                    
                 </div>
 
                 <div id="social-header" class="hidden-xs">
@@ -36,9 +36,9 @@
                     <a href="#" class="social-icon soc-github animated fadeInDown animation-delay-7"><i class="fa fa-github"></i></a>
                 </div>
                 <div id="search-header" class="hidden-xs animated bounceInRight">
-                    <div class="input-group">
+                    <div class="input-group" style="margin-bottom: 30px;">
                         <input id="search" type="text" class="form-control" placeholder="Pesquisar utilizador...">
-                        <span class="input-group-btn">
+                        <span class=" input-group-btn">
                             <script>
                                 function onClick() {
                                     if (document.getElementById("search").value == "") {
@@ -111,7 +111,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">A minha conta</a>
                             <div class="dropdown-menu dropdown-profile animated fadeInUp">
-                                <img src="~/Images/avatar.jpg" class="imageborder alignleft" alt="image">
+                                <img src=@ViewBag.UserImg class="imageborder alignleft" alt="image">
                                 <h3>@User.Identity.Name</h3>
                                 <h5>@System.DateTime.Now</h5>
                                 <a href="@Url.Action("Perfil","Account", new { id = ViewBag.UserId  })">Perfil</a>

@@ -14,37 +14,41 @@
             </ol>
         </div>
     </div>
-@using (Html.BeginForm("AdicionarItem", "DashBoard", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-    @Html.Encode(TempData["message"])
-    <h2>Adicionar Item</h2>
-    <div class="col-md-8 col-centered">
-        <div class="panel panel-primary animated fadeInDown">
+    @using (Html.BeginForm("AdicionarItem", "DashBoard", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+        @Html.Encode(TempData["message"])
+        <h2>Adicionar Item</h2>
+        <div class="col-md-8 col-centered">
+            <div class="panel panel-primary animated fadeInDown">
 
-            <div class="panel-body">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="InputNome">Descrição<sup>*</sup></label>
-                        @Html.TextBoxFor(m => m.Descricao, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label for="InputCusto">Custo<sup>*</sup></label>
-                        @Html.TextBoxFor(m => m.Custo, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label>Escolha a</label>
-                        @Html.LabelFor(m => m.imagem)
-                        <input id="imagem" name="imagem" type="file">
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right" value="AdicionarItem">Adicionar</button>
-                </form>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="InputNome">Nome<sup>*</sup></label>
+                            @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label for="InputNome">Descrição<sup>*</sup></label>
+                            @Html.TextBoxFor(m => m.Descricao, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label for="InputCusto">Custo<sup>*</sup></label>
+                            @Html.TextBoxFor(m => m.Custo, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Escolha a</label>
+                            @Html.LabelFor(m => m.imagem)
+                            <input id="imagem" name="imagem" type="file">
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right" value="AdicionarItem">Adicionar</button>
+                    </form>
 
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 
     <h2>Remover item</h2>
     <div class="col-centered col-lg-6">
@@ -54,6 +58,7 @@
                 <thead>
                     <tr>
                         <th>ID <a><i class="fa fa-sort"></i></a></th>
+                        <th>Nome <a><i class="fa fa-sort"></i></a></th>
                         <th>Descrição <a><i class="fa fa-sort"></i></a></th>
                         <th>Custo (Moedas) <a><i class="fa fa-sort"></i></a></th>
                     </tr>
@@ -61,11 +66,12 @@
                 <tbody>
                     @foreach (var item in ViewBag.Lista)
                     {
-                    <tr>
-                        <td>@item.ItemId</td>
-                        <td>@item.Descricao</td>
-                        <td>@item.Custo</td>
-                    </tr>
+                        <tr>
+                            <td>@item.ItemId</td>
+                            <td>@item.Nome</td>
+                            <td>@item.Descricao</td>
+                            <td>@item.Custo</td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -96,7 +102,7 @@
     <div class="col-lg-4 col-centered">
         <div class="form-group">
             <label>Insira o "ID" do item pretendido</label>
-            <input id="iditem"class="form-control" placeholder="Escreva aqui...">
+            <input id="iditem" class="form-control" placeholder="Escreva aqui...">
         </div>
         <script>
             function onClick() {

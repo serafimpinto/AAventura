@@ -19,14 +19,16 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-            /*if(User.Identity.IsAuthenticated) {
+            if(User.Identity.IsAuthenticated) {
             Utilizador user = db.Utilizadores.Find(id);
+            ViewBag.UserImg = user.Avatar;
+
             if (user.Estado != 0)
                 return View();
             else
                 return RedirectToAction("Index", "DashBoard");
             }
-            else*/
+            else
             return View();
         }
 
@@ -34,14 +36,16 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             return View();
         }
         public ActionResult Team()
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             return View();
         }
 
@@ -49,7 +53,8 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             return View();
         }
 
@@ -57,13 +62,18 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
-
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             return View(db.Utilizadores.ToList());
 
         }
 
         public ActionResult Pesquisa(string searchString)
         {
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             var users = from m in db.Utilizadores
                         select m;
 

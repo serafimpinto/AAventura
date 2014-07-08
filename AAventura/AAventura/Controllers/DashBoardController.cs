@@ -23,8 +23,12 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
+            Utilizador u = db.Utilizadores.Find(id);
 
-            return View();
+            if (u.Estado != 0)
+                return HttpNotFound();
+            else
+                return View();
         }
 
         public ActionResult Utilizadores(int pag = 0)

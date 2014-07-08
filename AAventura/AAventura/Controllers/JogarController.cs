@@ -54,6 +54,8 @@ namespace AAventura.Controllers
                 db.Aventuras.Add(aventura);
                 db.SaveChanges();
 
+                aventura.inicio = DateTime.Now;
+
                 List<Item> itens = db.Itens.ToList();
                 ViewBag.Lista = new List<Item>();
                 for (int i = 0; i < itens.Count; i++)
@@ -70,6 +72,7 @@ namespace AAventura.Controllers
                     ViewBag.Lista.Add(itens.ElementAt(i));
                 }
                 Aventura a = db.Aventuras.Find(aventuraID);
+                DateTime ini = DateTime.Now;
                 return View(a);
             }
 
@@ -100,6 +103,23 @@ namespace AAventura.Controllers
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
             return View();
+        }
+
+        public ActionResult Sair()
+        {
+            int id = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id;
+            Utilizador u = db.Utilizadores.Find(id);
+
+            Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == id);
+            
+            DateTime agora = DateTime.Now;
+
+            DateTime inicio = a.inicio;
+
+            u.TempoTotal += (agora - inicio).Milliseconds; 
+
+            return  RedirectToAction("Index","Home");
         }
     }
 }

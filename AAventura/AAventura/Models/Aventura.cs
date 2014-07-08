@@ -17,5 +17,7 @@ namespace AAventura.Models
         public virtual Utilizador Utilizador { get; set; }
         public virtual ICollection<Item> Itens { get; set; }
         public virtual ICollection<Zona> Zonas { get; set; }
+        [NotMapped]
+        public DateTime inicio { get; set; }
     }
 }

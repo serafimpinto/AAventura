@@ -32,7 +32,7 @@ namespace AAventura.Migrations
                      NrRespostasCertas = 0,
                      NrRespostasErradas = 0,
                      VoltasDadas = 0,
-                     TempoTotal = DateTime.Today,
+                     TempoTotal = 0,
                      HighScore = 0
                  });
             //
