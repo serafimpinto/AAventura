@@ -20,7 +20,7 @@ namespace AAventura.Models
         public int NrRespostasCertas { get; set; }
         public int NrRespostasErradas { get; set; } 
         public int VoltasDadas { get; set; }
-        public long TempoTotal { get; set; }
+        public long TempoJogo { get; set; }
         public float HighScore { get; set; }
         public virtual ICollection<Score> Scores { get; set; }
         public virtual ICollection<Aventura> Aventuras { get; set; }

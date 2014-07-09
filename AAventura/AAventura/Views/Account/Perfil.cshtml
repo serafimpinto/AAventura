@@ -70,8 +70,8 @@
                             <td>@Model.HighScore</td>
                         </tr>
                         <tr>
-                            <th>Tempo</th>
-                            <td>@Model.TempoTotal</td>
+                            <th>Tempo Total de Jogo</th>
+                            <td>@TimeSpan.FromMilliseconds(@Model.TempoJogo).Hours horas e @TimeSpan.FromMilliseconds(@Model.TempoJogo).Minutes minutos </td>
                         </tr>
                     </table>
                 </div>

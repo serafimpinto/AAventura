@@ -56,6 +56,8 @@
     <link href="~/content/css3/color-default.css" rel="stylesheet" media="screen" title="default">
     <link href="~/content/css3/width-full.css" rel="stylesheet" media="screen" title="default">
 
+    <link rel="stylesheet" href="~/clock/css/jbclock.css" type="text/css" media="all" />
+
     <!--Main chunk of javascript that creates and controls the map.-->
     <script type="text/javascript">
 
@@ -1521,6 +1523,8 @@
             }
         }
 
+        var interval;
+        var seconds = 30;
         function MostrarPerguntaPorZona(lat, long, dif) {
             $.ajax({
                 url: '/Pergunta/GetRandomByZona',
@@ -1544,8 +1548,21 @@
                 }
             });
             $('#myModal').modal('toggle');
+            seconds = 30;
+            interval = setInterval(function () {
+            
+                var el = $("#timer");
+                if (seconds == 0) {
+                    clearInterval(interval);
+                    el.html('0:00');
+                    $('#myModal').modal('hide');
+                    seconds = 30;
+                } else {
+                    seconds--;
+                    el.html(seconds);
+                }
+            }, 1000);
         }
-
 
         function ReloadPage() {
             location.reload();
@@ -1607,6 +1624,9 @@
                 }
             });
         }
+
+
+
     </script>
 
 </head>
@@ -1628,9 +1648,25 @@
                     @Html.RadioButton("resposta", "C", new { id = "resp3" }) <label id="Resposta3Descricao"></label><br />
                     @Html.RadioButton("resposta", "D", new { id = "resp4" }) <label id="Resposta4Descricao"></label><br />
                     <br />
-                    <div>
-                        <img src="" alt="" width="200px" height="200px" id="PerguntaImagem" />
+                    <div class="row">
+                        <div class="col-lg-6 pull-left">
+                            <img src="" alt="" width="200px" height="200px" id="PerguntaImagem" />
+                        </div>
+                        <div class="col-lg-6 pull-right">
+                            <div class="clock_seconds">
+                                <div class="bgLayer">
+                                    <div class="topLayer"></div>
+                                    <canvas id="canvas_seconds" width="188" height="188"></canvas>
+                                    <div class="text">
+                                        <p id="timer" class="val">30</p>
+                                        <p class="type_seconds">Segundos</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                   
                     <br />
                     <button type="button" class="btn btn-success" id="idAjuda" onclick="ajuda(); flag();">Usar Ajuda</button>
                     <div class="top-right" id="AjudaPergunta" style="display:none">
@@ -1638,7 +1674,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-default" onclick="clearInterval(interval); $('#timer').html('30');" data-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-primary" id="btnResponder" onclick="SubmeterPergunta()">Responder</button>
                 </div>
             </div>
@@ -1722,7 +1758,7 @@
                             </div>
                         </li>
                         <li class="dropdown">
-                            <a href="/Jogar/Sair">Sair do Jogo</a>
+                            <a href="@Url.Action("Sair","Jogar", new { id = @Model.AventuraId })">Sair do Jogo</a>
                         </li>
 
                     </ul> <!-- nav nabvar-nav -->

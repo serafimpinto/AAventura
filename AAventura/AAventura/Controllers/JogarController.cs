@@ -22,6 +22,8 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             if (User.Identity.IsAuthenticated)
                 return View();
             else
@@ -33,6 +35,8 @@ namespace AAventura.Controllers
         {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
+            Utilizador u = db.Utilizadores.Find(id);
+            ViewBag.UserImg = u.Avatar;
             if (User.Identity.IsAuthenticated)
                 return View();
             else
@@ -50,11 +54,11 @@ namespace AAventura.Controllers
                 aventura.Exploradores = 100;
                 aventura.Moedas = 0;
                 aventura.Utilizador = db.Utilizadores.Find(id);
+                aventura.inicio = DateTime.Now;
 
                 db.Aventuras.Add(aventura);
                 db.SaveChanges();
 
-                aventura.inicio = DateTime.Now;
 
                 List<Item> itens = db.Itens.ToList();
                 ViewBag.Lista = new List<Item>();
@@ -72,7 +76,8 @@ namespace AAventura.Controllers
                     ViewBag.Lista.Add(itens.ElementAt(i));
                 }
                 Aventura a = db.Aventuras.Find(aventuraID);
-                DateTime ini = DateTime.Now;
+                a.inicio = DateTime.Now;
+                db.SaveChanges();
                 return View(a);
             }
 
@@ -105,20 +110,20 @@ namespace AAventura.Controllers
             return View();
         }
 
-        public ActionResult Sair()
+        public ActionResult Sair(int id = 0)
         {
-            int id = WebSecurity.GetUserId(User.Identity.Name);
-            ViewBag.UserId = id;
-            Utilizador u = db.Utilizadores.Find(id);
+            int id2 = WebSecurity.GetUserId(User.Identity.Name);
+            ViewBag.UserId = id2;
+            Utilizador u = db.Utilizadores.Find(id2);
 
-            Aventura a = db.Aventuras.ToList().LastOrDefault(x => x.Utilizador.UserId == id);
+            Aventura a = db.Aventuras.Find(id);
             
             DateTime agora = DateTime.Now;
 
-            DateTime inicio = a.inicio;
+            DateTime i= a.inicio;
 
-            u.TempoTotal += (agora - inicio).Milliseconds; 
-
+            u.TempoJogo += (agora - i).Milliseconds;
+            db.SaveChanges();
             return  RedirectToAction("Index","Home");
         }
     }

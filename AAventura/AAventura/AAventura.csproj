@@ -207,6 +207,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="clock\css\jbclock.css" />
+    <Content Include="clock\img\bg.png" />
+    <Content Include="clock\img\diviers.png" />
+    <Content Include="clock\img\maingbg.png" />
+    <Content Include="clock\img\top.png" />
     <Content Include="Content\css2\bootstrap.css" />
     <Content Include="Content\css2\bootstrap.min.css" />
     <Content Include="Content\css2\sb-admin.css" />
