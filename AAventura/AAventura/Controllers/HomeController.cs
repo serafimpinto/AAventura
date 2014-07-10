@@ -70,6 +70,7 @@ namespace AAventura.Controllers
 
         public ActionResult Pesquisa(string searchString)
         {
+            if(User.Identity.IsAuthenticated) {
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
             Utilizador u = db.Utilizadores.Find(id);
@@ -87,6 +88,9 @@ namespace AAventura.Controllers
                 }*/
             }
             return View(users.ToList());
+            }
+            else
+                return HttpNotFound();
         }
     }
 }
