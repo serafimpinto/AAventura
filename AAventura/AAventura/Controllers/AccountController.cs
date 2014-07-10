@@ -133,7 +133,7 @@ namespace AAventura.Controllers
                             NrRespostasCertas = 0,
                             NrRespostasErradas = 0,
                             VoltasDadas = 0,
-                            TempoTotal = 0,
+                            TempoJogo = 0,
                             HighScore = 0
                         });
                         return RedirectToAction("Login", "Account");
