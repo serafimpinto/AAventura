@@ -41,14 +41,19 @@ namespace AAventura.Controllers
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 Utilizador user = db.Utilizadores.Where(u => u.UserName.Equals(model.UserName)).FirstOrDefault();
-                if (user.Estado != 0)
+                if (user.Estado == 1)
                     return RedirectToAction("Index", "Home");
-                else
+                if (user.Estado == 0)
                     return RedirectToAction("Index", "DashBoard");
             }
+            Utilizador user2 = db.Utilizadores.Where(u => u.UserName.Equals(model.UserName)).FirstOrDefault();
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            if (user2.Estado == 2)
+                ModelState.AddModelError("", "O utilizador encontra-se banido.");
+            else
+            {
+                ModelState.AddModelError("", "O username ou password introduzidos estão incorrectos.");
+            }
             return View();
         }
 
@@ -69,9 +74,11 @@ namespace AAventura.Controllers
         public ActionResult Perfil(int id = 0)
         {
             int id2 = WebSecurity.GetUserId(User.Identity.Name);
-            ViewBag.UserId = id2;
-            Utilizador u = db.Utilizadores.Find(id2);
-            ViewBag.UserImg = u.Avatar;
+            ViewBag.UserId = id;
+            ViewBag.Log = id2;
+            Utilizador u = db.Utilizadores.Find(id);
+            Utilizador a = db.Utilizadores.Find(id2);
+            ViewBag.UserImg = a.Avatar;
             if (u == null)
             {
                 return HttpNotFound();
@@ -128,7 +135,7 @@ namespace AAventura.Controllers
                         {
                             Nome = model.Nome,
                             Email = model.Email,
-                            Avatar = "/../images/default.jpg",
+                            Avatar = "/../images/defaultmin.jpg",
                             Estado = 1,
                             NrRespostasCertas = 0,
                             NrRespostasErradas = 0,

@@ -37,7 +37,7 @@ namespace AAventura.Controllers
             {
                 pag = 0;
             }
-            int nelem = 2;
+            int nelem = 4;
             int id = WebSecurity.GetUserId(User.Identity.Name);
             ViewBag.UserId = id;
             ViewBag.Pag = pag;
@@ -100,7 +100,7 @@ namespace AAventura.Controllers
                         NrRespostasCertas = 0,
                         NrRespostasErradas = 0,
                         VoltasDadas = 0,
-                        TempoTotal = 0,
+                        TempoJogo = 0,
                         HighScore = 0
                     });
                     TempData["message"] = "Inserido com sucesso";

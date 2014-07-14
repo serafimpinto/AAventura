@@ -31,7 +31,7 @@
                     <tbody>
                     @foreach (var item in Model) {
                         <tr>
-                            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                            <td><a href="/Account/Perfil/@item.UserId">@Html.DisplayFor(modelItem => item.UserName)</a></td>
                             <td>@Html.DisplayFor(modelItem => item.HighScore)</td>
                             <td>@Html.DisplayFor(modelItem => item.VoltasDadas)</td>
                             <td>@Html.DisplayFor(modelItem => item.NrRespostasCertas)</td>
